@@ -1,0 +1,50 @@
+/* Background */
+body {
+    background-color: #14112d !important;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Form Container */
+div[class^="api"] {
+    background: #1a1736 !important;
+    padding: 20px;
+    border-radius: 10px;
+    color: #b6a0ff;
+}
+
+/* Input Fields */
+input {
+    background-color: #0f0d1b !important;
+    color: white !important;
+    border: 2px solid #b6a0ff !important;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Labels */
+label {
+    color: #b6a0ff !important;
+}
+
+/* File Upload */
+input[type="file"] {
+    color: white !important;
+}
+
+/* Sign Up Button */
+button[type="submit"] {
+    background: #b6a0ff !important;
+    color: white !important;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Social Login Button */
+button[class*="idp-button"] {
+    background: #0077b5 !important;
+    color: white !important;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+}
