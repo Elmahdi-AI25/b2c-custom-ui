@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Sign up or sign in</title>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <style id="common">
+    @font-face {
+      font-family: 'SegoeUI';
+      src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui.WOFF);
+      font-weight: normal;
+    }
+
+    @font-face {
+      font-family: 'SegoeUI';
+      src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui_bold.WOFF);
+      font-weight: bold;
+    }
+
+    #AmazonExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/amazon.svg);
+    }
+
+    #AmazonExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/amazon.svg);
+    }
+
+    #FacebookExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/facebook.svg);
+    }
+
+    #FacebookExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/facebook.svg);
+    }
+
+    #GitHubExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/github.svg);
+    }
+
+    #GitHubExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/github.svg);
+    }
+
+    #AppleExchange,
+    #AppleManagedExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/apple.svg);
+    }
+
+    #AppleExchange:hover,
+    #AppleManagedExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/apple.svg);
+    }
+
+    #GoogleExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/google.svg);
+    }
+
+    #GoogleExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/google.svg);
+    }
+
+    #LinkedInExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/linkedin.svg);
+    }
+
+    #LinkedInExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/linkedin.svg);
+    }
+
+    #MicrosoftAccountExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/microsoft.svg);
+    }
+
+    #MicrosoftAccountExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/microsoft.svg);
+    }
+
+    #QQExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/qq.svg);
+    }
+
+    #QQExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/qq.svg);
+    }
+
+    #TwitterExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/twitter.svg);
+    }
+
+    #TwitterExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/twitter.svg);
+    }
+
+    #WeChatExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/wechat.svg);
+    }
+
+    #WeChatExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/wechat.svg);
+    }
+
+    #WeiboExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/weibo.svg);
+    }
+
+    #WeiboExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/weibo.svg);
+    }
+
+    .buttons #cancel:before {
+      content: url(https://login.microsoftonline.com/templates/src/images/left-arrow.svg);
+    }
+  </style>
+  <style id="idpselector">
+    #SignInWithLogonNameExchange,
+    #SignUpWithLogonEmailExchange,
+    #SignUpWithLogonNameExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/local.svg);
+    }
+
+    #SignInWithLogonNameExchange:hover,
+    #SignUpWithLogonEmailExchange:hover,
+    #SignUpWithLogonNameExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/local.svg);
+    }
+
+    #SignUpWithLogonEmailExchange.text-link {
+      background-image: none;
+      background-color: transparent !important;
+    }
+
+    #SignUpWithLogonEmailExchange.text-link:hover {
+      background-image: none;
+      background-color: transparent !important;
+    }
+  </style>
+
+  <style>
+    /* Following are generated styles via gulp. */
+    /* inject: css */
+    html {
+      background: 0 0
+    }
+
+    body {
+        /* Use a dark background similar to the image */
+        background-color: #211d3f; /* Dark purple */
+        /* Use a serif font similar to the image labels/headings */
+        font-family: 'Georgia', Times, serif;
+        color: #e0e0ff; /* Default light text color */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        text-align: left;
+    }
+
+    p {
+      margin: 0
+    }
+
+    a:focus {
+      outline: 0
+    }
+
+    /* Remove default border for inputs/selects, we'll add custom ones */
+    input,
+    select {
+      border: none; /* Remove the default border */
+    }
+
+
+    /* Apply styles to text, email, and password inputs */
+    #attributeList ul li input[type="text"],
+    #attributeList ul li input[type="email"],
+    #attributeList ul li input[type="password"] {
+        height: 50px;
+        width: 100%; /* Use full width of container */
+        border-radius: 8px; /* Rounded corners */
+        background-color: #333333; /* Dark background */
+        border: 1px solid #9457eb; /* Purple border */
+        color: #ffffff; /* White text color when typing */
+        padding-left: 15px; /* Indentation from left */
+        padding-right: 15px; /* Padding on right */
+        font-size: 1em; /* Standard font size */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        text-indent: 0; /* Override any text-indent */
+        -webkit-appearance: none; /* Remove default browser styling */
+        -moz-appearance: none;
+        appearance: none;
+        margin-top: 5px; /* Add a little space below the label */
+    }
+
+    /* Style placeholders specifically */
+    #attributeList ul li input::placeholder { /* Standard */
+        color: #a9a9a9; /* Light grey placeholder text */
+        font-style: italic;
+        opacity: 1; /* Ensure placeholder is fully visible */
+    }
+
+    #attributeList ul li input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color: #a9a9a9;
+        font-style: italic;
+        opacity: 1;
+    }
+
+    #attributeList ul li input::-moz-placeholder { /* Firefox */
+        color: #a9a9a9;
+        font-style: italic;
+        opacity: 1;
+    }
+
+    #attributeList ul li input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #a9a9a9;
+        font-style: italic;
+        opacity: 1;
+    }
+
+    #attributeList ul li input::-ms-input-placeholder { /* Microsoft Edge */
+        color: #a9a9a9;
+        font-style: italic;
+        opacity: 1;
+    }
+
+
+    img[data-tenant-branding-background=true] {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1; /* Put behind content */
+      position: fixed;
+      left: 0;
+      overflow: hidden;
+      top: 0
+    }
+
+    div[data-tenant-branding-background-color=true] {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      z-index: -1; /* Put behind content */
+      /* Ensure background color from body is used */
+       background-color: inherit;
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      display: table;
+      height: 100vh;
+      padding: 0
+    }
+
+    #api {
+      margin: 0 auto;
+      max-width: 400px; /* Limit form width */
+       padding: 20px; /* Add some padding */
+    }
+
+    .heading h1 {
+        margin-bottom: 30px; /* Increased space below heading */
+        color: #e1c85b; /* Yellow/Gold color for heading */
+        font-size: 2.5em; /* Larger heading */
+        font-weight: bold; /* Bold heading */
+         font-family: 'Georgia', Times, serif; /* Serif font */
+    }
+
+    .col-lg-6 {
+      /* max-width: 470px; */ /* Let #api control width */
+      width: 100%;
+      float: none;
+      display: inline-block;
+      vertical-align: top;
+      padding: 0;
+      background-color: transparent; /* Ensure container is transparent */
+    }
+
+    .row {
+      width: 100%;
+      margin: 0;
+      display: table-cell;
+      vertical-align: middle
+    }
+
+    ul {
+      padding: 0
+    }
+
+    #simplemodal-container .simplemodal-data {
+      padding: 5px 8px;
+      overflow: hidden;
+      background-color: #fff;
+      border-radius: 3px;
+      font-style: italic
+    }
+
+    /* Style the 'Continue with LinkedIn' button */
+    #LinkedInExchange { /* Use the correct ID if available, or a class */
+        background-color: #0077b5; /* LinkedIn Blue */
+        border: none;
+        border-radius: 8px; /* Rounded corners */
+        color: white;
+        height: 50px;
+        display: flex; /* Use flexbox for alignment */
+        align-items: center;
+        justify-content: center; /* Center content */
+        text-decoration: none;
+        font-size: 1em;
+        width: 100%; /* Full width */
+        margin-bottom: 20px; /* Space below button */
+        cursor: pointer;
+         font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; /* Keep sans-serif for buttons */
+         padding: 0 15px; /* Add padding */
+         box-sizing: border-box;
+    }
+     #LinkedInExchange:hover {
+         background-color: #005e90 !important; /* Darker blue on hover */
+     }
+     /* You might need to adjust the HTML slightly or use ::before for the icon if not provided by B2C */
+     #LinkedInExchange i, /* If using font awesome or similar */
+     #LinkedInExchange svg { /* If using SVG */
+         margin-right: 10px; /* Space between icon and text */
+     }
+
+
+    #LocalAccountSigninEmailExchange,
+    #LocalAccountSigninUsernameExchange,
+    #SignInWithLogonEmailExchange,
+    #SignInWithLogonNameExchange,
+    #SignUpWithLogonEmailExchange,
+    #SignUpWithLogonNameExchange {
+        /* Default B2C Button Styling - Overridden by more specific rules like #LinkedInExchange */
+        background-color: #0077b5; /* Default to a theme color or override per button */
+        background-image: none; /* Remove default image if any */
+        border-radius: 8px;
+        width: 100%;
+        height: 50px;
+        font-size: 1em;
+        margin-left: auto;
+        color: white;
+        border: none;
+        margin-bottom: 10px;
+         font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; /* Sans-serif for buttons */
+    }
+
+    #LocalAccountSigninEmailExchange:hover,
+    #LocalAccountSigninUsernameExchange:hover,
+    #SignInWithLogonEmailExchange:hover,
+    #SignInWithLogonNameExchange:hover,
+    #SignUpWithLogonEmailExchange:hover,
+    #SignUpWithLogonNameExchange:hover {
+      background-color: #005e90 !important; /* Darker hover for default buttons */
+    }
+
+    #AmazonExchange:hover {
+      background-color: #36474f !important
+    }
+
+    #FacebookExchange:hover {
+      background-color: #3b5595 !important
+    }
+
+    #GitHubExchange:hover {
+      background-color: #0f0f0f !important
+    }
+
+    #AppleExchange:hover,
+    #AppleManagedExchange:hover {
+      background-color: #0f0f0f !important
+    }
+
+    #GoogleExchange:hover {
+      background-color: #c64a29 !important
+    }
+
+    /* #LinkedInExchange:hover already styled */
+
+    #MicrosoftAccountExchange:hover {
+      background-color: #01a4ef !important
+    }
+
+    #QQExchange:hover {
+      background-color: #1a97df !important
+    }
+
+    #TwitterExchange:hover {
+      background-color: #1da1f2 !important
+    }
+
+    #WeChatExchange:hover {
+      background-color: #4cc522 !important
+    }
+
+    #WeiboExchange:hover {
+      background-color: #e81123 !important
+    }
+
+     /* Style the main 'Sign Up' button */
+    .buttons button#continue, /* Assuming it might have ID 'continue' */
+    .buttons button#next {    /* Or 'next' */
+        margin: 20px auto 0; /* Top margin, centered, no bottom margin */
+        width: 100%; /* Full width */
+        height: 50px;
+        background-color: #aa80f1; /* Light purple */
+        border-radius: 8px;
+        border: none;
+        color: #fff;
+        font-size: 1.1em; /* Slightly larger text */
+        cursor: pointer;
+         font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; /* Sans-serif for buttons */
+         font-weight: bold;
+    }
+
+    .buttons button#continue:hover,
+    .buttons button#next:hover {
+        background-color: #9457eb; /* Darker purple on hover */
+        border-color: transparent; /* Ensure no border shows on hover */
+    }
+
+
+    .buttons button[aria-disabled=true] {
+      opacity: .3
+    }
+
+    .buttons button:not([aria-disabled=true]) {
+      opacity: 1
+    }
+
+    .buttons #cancel {
+      padding: 0;
+      margin-left: auto;
+      background: 0 0;
+      border: 0;
+      width: inherit;
+      position: absolute;
+      background-color: transparent;
+      top: 2px;
+      left: 15px;
+      font-size: 1em;
+      color: #a9a9a9; /* Light grey cancel button */
+      box-shadow: none;
+      text-align: left;
+       font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; /* Sans-serif */
+    }
+
+    .buttons #cancel:hover {
+      color: #fff !important; /* White on hover */
+    }
+
+    .buttons #cancel:before {
+      padding: 10px;
+      vertical-align: sub;
+      zoom: 90%;
+      display: inline-block
+    }
+
+    #attributeList ul {
+      padding: 0;
+       margin: 0; /* Remove default margin */
+    }
+
+    #attributeList ul li {
+      list-style: none;
+      margin: 1.5rem 0; /* Increased vertical spacing between fields */
+       text-align: left; /* Ensure list items are left-aligned */
+    }
+
+    /* Style the labels */
+    label,
+    #attributeList ul li label {
+        font-weight: 600; /* Keep bold */
+        display: block; /* Ensure label is on its own line */
+        text-align: left;
+        float: none;
+        color: #e0e0ff; /* Light lavender/white */
+        margin-bottom: 8px; /* Space between label and input */
+        font-size: 1em;
+         font-family: 'Georgia', Times, serif; /* Serif font for labels */
+    }
+
+
+    #attributeList ul li.EmailBox label,
+    #attributeList ul li.Password label,
+    #attributeList ul li.TextBox label {
+      /* Keep rule to hide specific labels if needed by B2C structure */
+      /* display: none !important; */
+      /* OR, let's show them based on the image */
+       display: block !important; /* Make sure they are visible */
+    }
+
+    #attributeList ul li label[for=country] {
+      float: left;
+      display: inline-block !important;
+      margin-bottom: .5rem
+    }
+
+    #attributeList ul li label[for=cpiminternal_legalCountry] {
+      float: none;
+      display: block !important;
+      text-align: left;
+      margin-bottom: .5rem
+    }
+
+    #attributeList ul li label[for=cpiminternal_dateOfBirth] {
+      float: none;
+      text-align: left;
+      display: block !important;
+      margin-bottom: .5rem
+    }
+
+    /* Input styles already defined above */
+    /* #attributeList ul li input { ... } */
+
+    /* Remove placeholder-specific text-indent */
+    /* #attributeList ul li input::-webkit-input-placeholder {
+      text-indent: 0;
+    } */
+
+    #attributeList ul li .attrEntry.validate input.invalid,
+    #attributeList ul li .attrEntry.validate input:invalid {
+      border: 1px solid #ff4d4d; /* Brighter red for invalid */
+    }
+
+    #attributeList ul li .attrEntry .verify {
+      margin-top: 1rem; /* Reduced space for verification controls */
+      padding-bottom: 10px;
+      position: relative
+    }
+
+    #attributeList ul li .attrEntry .verificationControlContent .buttons {
+      margin-top: 1rem; /* Reduced space */
+      padding-bottom: 10px;
+      position: relative
+    }
+
+    /* Style verification buttons to match theme */
+    #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send],
+    #attributeList ul li .attrEntry .verificationControlContent .sendCode,
+    #attributeList ul li .attrEntry .verify .verifyButton,
+    #attributeList ul li .attrEntry .verificationControlContent .verifyCode,
+    #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend],
+    #attributeList ul li .attrEntry .verificationControlContent .sendNewCode,
+    #attributeList ul li .attrEntry .verify .editButton,
+    #attributeList ul li .attrEntry .verificationControlContent .changeClaims {
+        width: auto; /* Adjust width as needed */
+        padding: 0 20px;
+        height: 40px; /* Smaller height for verification buttons */
+        background-color: #9457eb; /* Use theme purple */
+        color: #fff;
+        border-radius: 5px; /* Slightly smaller radius */
+        border: none;
+        font-size: 0.9em;
+        margin-right: 5px;
+        cursor: pointer;
+         font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; /* Sans-serif */
+    }
+     #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send]:hover,
+     #attributeList ul li .attrEntry .verificationControlContent .sendCode:hover,
+     #attributeList ul li .attrEntry .verify .verifyButton:hover,
+     #attributeList ul li .attrEntry .verificationControlContent .verifyCode:hover,
+     #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend]:hover,
+     #attributeList ul li .attrEntry .verificationControlContent .sendNewCode:hover,
+     #attributeList ul li .attrEntry .verify .editButton:hover,
+     #attributeList ul li .attrEntry .verificationControlContent .changeClaims:hover {
+        background-color: #aa80f1; /* Lighter purple on hover */
+     }
+
+
+    @media screen and (-ms-high-contrast:active) {
+      #attributeList ul li .attrEntry .verify button,
+      .buttons #continue {
+        border: 1px dashed #fff !important
+      }
+
+      #attributeList ul li .attrEntry .verify button:hover,
+      .buttons #continue:hover {
+        border: 1px solid #fff !important
+      }
+    }
+
+
+    #attributeList ul li .attrEntry .verify #email_ver_input_label {
+      display: none !important
+    }
+
+    #api .working {
+      background: url(data:image/gif;base64,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) no-repeat;
+      height: 30px;
+      width: auto;
+      background-position: center bottom
+    }
+
+    #attributeList ul li .attrEntry .itemLevel {
+      display: none
+    }
+
+    input[type=email],
+    input[type=password],
+    input[type=text] {
+      -webkit-appearance: none
+    }
+
+    /* Style dropdowns similarly to inputs */
+    #attributeList ul li .attrEntry .dropdown_single,
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
+        height: 50px;
+        width: 100%; /* Full width unless part of a group like date */
+        border-radius: 8px;
+        background-color: #333333;
+        border: 1px solid #9457eb;
+        color: #ffffff;
+        padding-left: 15px;
+        padding-right: 15px; /* Add right padding for consistency */
+        font-size: 1em;
+        box-sizing: border-box;
+         -webkit-appearance: none; /* Try to remove default dropdown arrow */
+         -moz-appearance: none;
+         appearance: none;
+         /* Add custom arrow using background image */
+         background-image: url('data:image/svg+xml;utf8,<svg fill="%23a9a9a9" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+         background-repeat: no-repeat;
+         background-position: right 10px center;
+         background-size: 20px;
+         margin-top: 5px; /* Space below label */
+    }
+
+
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date {
+      display: flex; /* Use flexbox for date alignment */
+      width: 100%;
+       gap: 10px; /* Space between date selects */
+    }
+
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
+       /* Individual widths handled below, remove width: 100% */
+       flex-grow: 1; /* Allow selects to grow */
+        height: 50px; /* Consistent height */
+        padding-left: 15px;
+    }
+
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_day.day {
+      /* margin-right: 3%; */ /* Use gap instead */
+      width: 23%; /* Original width */
+       flex-grow: 0; /* Don't allow day to grow excessively */
+        flex-basis: 70px; /* Minimum base width */
+    }
+
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_month.month {
+      /* margin-right: 3%; */
+      width: 38%; /* Original width */
+       flex-grow: 1; /* Allow month to take more space */
+    }
+
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_year.year {
+      width: 33%; /* Original width */
+       flex-grow: 1; /* Allow year to take more space */
+    }
+
+    #attributeList ul li .helpLink {
+      display: none
+    }
+
+    #attributeVerification .buttons {
+      margin-top: 30px
+    }
+
+    /* Style the container for the file input */
+    #attributeList ul li.Attribute.Complex.FileUpload { /* Try targeting the list item B2C might assign */
+         background-color: #333333;
+         border: 1px solid #9457eb;
+         border-radius: 8px;
+         padding: 10px 15px;
+         display: block; /* Or flex */
+         width: 100%;
+         box-sizing: border-box;
+         color: #a9a9a9; /* Color for "No file chosen" text */
+         height: 50px; /* Match height */
+         line-height: 28px; /* Try to vertically align */
+         margin-top: 5px;
+         display: flex; /* Use flex for alignment */
+         align-items: center;
+    }
+
+     /* Style the ACTUAL file input button provided by the browser */
+     #attributeList ul li input[type="file"]::file-selector-button {
+        background-color: #9457eb; /* Purple button */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 15px;
+        margin-right: 10px; /* Space between button and text */
+        cursor: pointer;
+        font-weight: bold;
+         font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; /* Sans-serif */
+        height: 30px; /* Adjust height if needed */
+        /* vertical-align: middle; */ /* Flex alignment handles this */
+     }
+
+      /* Hide the actual file input, assuming the LI is styled */
+      #attributeList ul li input[type="file"] {
+         /* Basic reset */
+          border: none;
+          background: transparent;
+          padding: 0;
+          margin: 0;
+          width: auto; /* Let flexbox handle sizing */
+          color: #a9a9a9; /* Style the 'No file chosen' text */
+           font-style: italic; /* Italicize 'No file chosen' */
+           flex-grow: 1; /* Allow text to take remaining space */
+      }
+
+
+    /* "or" separator styling */
+     .divider {
+         display: flex;
+         align-items: center;
+         text-align: center;
+         color: #a9a9a9; /* Light grey */
+         margin: 25px 0; /* Space around */
+          font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; /* Sans-serif for 'or' */
+         font-size: 0.9em;
+     }
+     .divider hr { /* If B2C uses hr elements */
+         flex: 1;
+         border: none;
+         border-top: 1px solid #a9a9a9; /* Lines */
+         margin: 0 0.5em; /* Space around hr */
+     }
+     .divider span { /* If B2C uses a span for 'or' */
+        padding: 0 0.5em; /* Space around 'or' text */
+     }
+     /* Alternative if no hr/span exists, using pseudo-elements */
+      .divider::before,
+      .divider::after {
+          content: '';
+          flex: 1;
+          border-bottom: 1px solid #a9a9a9; /* Lines */
+      }
+      .divider:not(:empty)::before {
+          margin-right: .75em; /* Space before text */
+      }
+      .divider:not(:empty)::after {
+          margin-left: .75em; /* Space after text */
+      }
+
+
+    @media screen and (max-width:600px) { /* Adjustments for smaller screens */
+      #api {
+          padding: 10px; /* Reduce padding */
+      }
+      .heading h1 {
+         font-size: 2em; /* Smaller heading */
+      }
+       #attributeList ul li input[type="text"],
+       #attributeList ul li input[type="email"],
+       #attributeList ul li input[type="password"],
+       #attributeList ul li .attrEntry .dropdown_single,
+       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select,
+       #attributeList ul li.Attribute.Complex.FileUpload {
+          height: 45px; /* Slightly smaller height */
+       }
+        #attributeList ul li input[type="file"]::file-selector-button {
+           height: 28px;
+           padding: 4px 10px;
+           font-size: 0.9em;
+        }
+       .buttons button#continue,
+       .buttons button#next,
+       #LinkedInExchange {
+           height: 45px; /* Slightly smaller buttons */
+           font-size: 1em;
+       }
+
+        #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date {
+           flex-direction: column; /* Stack date fields vertically */
+           gap: 8px;
+        }
+         #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
+            width: 100% !important; /* Make date fields full width when stacked */
+            flex-basis: auto;
+         }
+    }
+
+
+    /* Keep media query adjustments from original */
+    @media screen and (max-width:100%) { /* This seems overly broad, maybe adjust breakpoint */
+      .row .panel-default .panel-body {
+        margin-top: 40px
+      }
+
+      .row .panel-default .panel-body .branding img {
+        display: block;
+        height: 80px;
+        width: auto;
+        margin: 0 auto
+      }
+
+      .row .panel-default .panel-body .branding h1 {
+        display: none
+      }
+
+      .row .panel-default .panel-body h3 {
+        font-size: 1.5em;
+        margin-top: 15px
+      }
+
+       /* Adjustments within specific verification flow - keep if needed */
+      #attributeVerification #attributeList ul li input {
+        /* Styles here might conflict with general input styles, review if verification is used */
+         /* width: 60%; */ /* Let general styles handle width */
+         /* height: 40px; */ /* Let general styles handle height */
+         /* border-radius: .5rem; */
+         /* border: 1px solid #605e5c; */
+         /* text-indent: 10px; */
+      }
+
+      #attributeVerification #attributeList ul li input::-webkit-input-placeholder {
+        /* text-indent: 10px; */ /* Use padding instead */
+      }
+
+      #attributeVerification #attributeList ul li #email {
+         /* width: 65%; */ /* Let general styles handle width */
+        float: left;
+        position: relative;
+        z-index: 2
+      }
+
+      #attributeVerification #attributeList ul li #email_ver_but_verify {
+        /* Example of specific button styling - adapt if needed */
+        background: 0 0;
+        border: 0;
+        color: #aa80f1; /* Use theme color */
+        font-size: 1em;
+        position: relative;
+        right: 0;
+        top: 0; /* Adjust positioning */
+        font-size: 1.1em;
+        width: auto;
+        z-index: 1;
+        height: 20px
+      }
+
+      #attributeVerification #attributeList ul li #email_ver_input {
+        /* min-width: 50%; */
+        /* width: 60%; */
+        float: left
+      }
+        /* ... other verification specific styles ... keep or remove as needed ... */
+
+    }
+
+    .panel,
+    .panel_layout,
+    .panel_layout_row,
+     html { /* remove body, html height 100% if using fixed/absolute positioning extensively */
+      /* height: 100%; */
+    }
+    body { /* Ensure body takes at least viewport height */
+       min-height: 100vh;
+    }
+
+
+    @media only screen and (max-width:600px) {
+      img[data-tenant-branding-background=true] {
+        /* display: none; */ /* Keep background on mobile if desired */
+      }
+
+      .container {
+        /* background-color: #fff; */ /* Use body background */
+        background-color: transparent;
+      }
+
+      .container .row .panel-default {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+         background-color: transparent; /* Make panel transparent */
+      }
+    }
+
+    /* endinject */
+  </style>
+
+
+  <style>
+    /* Following are generated styles via gulp. */
+    /* inject: css */
+
+    /* Styles for Unified Sign In/Up page - Review and Adapt */
+
+    .unified_container .row .panel-default {
+      /* padding: 40px 30px; */ /* Use #api padding */
+      padding: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+      /* height: 100%; */ /* Allow height to be determined by content */
+      background-color: transparent; /* Unified panel transparent */
+       border: none;
+       box-shadow: none;
+    }
+
+    .unified_container .row .panel-default .panel-body {
+      /* max-width: 380px; */ /* Let #api control width */
+      width: auto;
+      margin: 0 auto;
+      padding: 0
+    }
+
+    .unified_container .row .panel-default .panel-body .companyName {
+      font-size: 1.5em;
+      margin-bottom: 45px;
+       color: #e0e0ff; /* Light color */
+    }
+
+    .unified_container .row .panel-default .panel-body .companyLogo {
+      display: block;
+       margin-bottom: 20px; /* Space below logo */
+    }
+
+    .unified_container .row .panel-default .panel-body img {
+      max-width: 100%;
+      width: auto;
+      max-height: 60px; /* Limit logo height */
+      height: auto; /* Maintain aspect ratio */
+      margin: 0 auto 30px auto; /* Center logo and add space below */
+      display: block
+    }
+
+    .unified_container .row .panel-default .panel-body h3 {
+      font-size: 1.5em;
+      /* display: none; */ /* Show headings if needed */
+       color: #e0e0ff; /* Light color */
+       margin-bottom: 20px;
+    }
+
+    .unified_container .row .panel-default #api {
+      /* display: table; */ /* Use default block display */
+      margin: 0;
+      width: 100%;
+    }
+
+    .unified_container .row .panel-default #api .intro {
+      display: block;
+      text-align: left;
+       margin-bottom: 15px;
+    }
+
+    .unified_container .row .panel-default #api .intro h2 {
+      font-size: 1.2em; /* Adjust size */
+       color: #e0e0ff; /* Light color */
+       font-weight: normal;
+    }
+
+     /* .unified_container .row .panel-default #api .divider { */
+       /* display: none; */ /* Use the new divider style */
+     /* } */
+
+    .unified_container .row .panel-default #api .localAccount {
+      /* top: 10px; */ /* Remove absolute positioning */
+      width: 100%;
+       margin-top: 20px; /* Add space if needed */
+    }
+
+    .unified_container .row .panel-default #api .localAccount .intro h2 {
+       /* font-size: 20px; */ /* Use intro h2 style above */
+    }
+
+    .unified_container .row .panel-default #api .localAccount .error {
+      color: #ff4d4d; /* Brighter red */
+      text-align: left;
+       margin-bottom: 10px;
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .buttons {
+      margin: 20px 0 0 0; /* Adjusted margin */
+      text-align: center; /* Center button */
+    }
+
+    /* Button styling handled by general button rules */
+    .unified_container .row .panel-default #api .localAccount .entry .buttons button {
+        /* background-image: none; */
+        /* background-color: #296ec6; */ /* Use theme button color */
+        /* border: none; */
+        /* border-radius: .5rem; */ /* Use theme border-radius */
+        /* cursor: pointer; */
+        /* display: inline-block; */
+        /* font-size: 1em; */
+        /* font-weight: 400; */
+        /* height: inherit; */ /* Use fixed height */
+        /* line-height: 1.3333333; */
+        /* margin-top: 2rem; */
+        /* margin-right: 0; */
+        /* margin-bottom: 1.2rem; */
+        /* margin-left: 0; */
+        /* padding: 10px 16px; */
+        /* text-align: center; */
+        /* touch-action: manipulation; */
+        /* user-select: none; */
+        /* vertical-align: middle; */
+        /* white-space: nowrap; */
+        /* width: inherit; */ /* Use 100% or auto */
+        /* -moz-user-select: none; */
+        /* -ms-touch-action: manipulation; */
+        /* -ms-user-select: none; */
+        /* -webkit-user-select: none; */
+        /* color: #fff; */
+        width: 100%; /* Make button full width */
+        /* box-shadow: 0 0 30px 0 #dae1f7; */ /* Optional shadow */
+         margin: 0; /* Reset specific margins */
+    }
+
+
+    @media screen and (-ms-high-contrast:active) {
+      .unified_container .row .panel-default #api .accountButton,
+      .unified_container .row .panel-default #api .localAccount .entry .buttons button {
+        border: 1px dashed #fff
+      }
+
+      .unified_container .row .panel-default #api .accountButton:hover,
+      .unified_container .row .panel-default #api .localAccount .entry .buttons button:hover {
+        border: 1px solid #fff
+      }
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .buttons button:focus,
+    .unified_container .row .panel-default #api .localAccount .entry .buttons button:hover {
+      /* -moz-box-shadow: none; */
+      /* -webkit-box-shadow: none; */
+      /* box-shadow: none; */
+      /* background-color: #1662c7; */ /* Use theme hover color */
+      /* color: #fff; */
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item {
+      position: relative;
+      width: 100%;
+      /* padding-top: 6px; */
+      /* padding-bottom: 6px; */
+       margin-bottom: 1.5rem; /* Space between items */
+      display: block;
+       text-align: left; /* Ensure left alignment */
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item label {
+      /* display: none; */ /* Show labels */
+       display: block;
+       color: #e0e0ff;
+       margin-bottom: 8px;
+        font-family: 'Georgia', Times, serif; /* Serif font */
+        font-weight: 600;
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item input:focus {
+      /* border: 2px solid #000; */ /* Use focus style if desired, e.g., outline */
+       outline: 2px solid #aa80f1;
+       outline-offset: 1px;
+       border-color: #aa80f1; /* Change border color on focus */
+    }
+
+    /* Input styling handled by general input rules */
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item input {
+        /* outline: 0; */
+        /* background-color: #fff !important; */ /* Use theme background */
+        /* background-image: none !important; */
+        /* border-radius: .5rem !important; */ /* Use theme radius */
+        /* color: #555; */ /* Use theme text color */
+        /* display: inline-block; */
+        /* font-size: 1em; */
+        /* height: 50px; */ /* Use theme height */
+        /* line-height: 1.42857143; */
+        /* padding: 6px 20px; */ /* Use theme padding */
+        /* transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important; */
+        width: 100% !important; /* Ensure full width */
+        /* -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important; */
+        /* -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s !important; */
+         margin: 0; /* Reset margin */
+         font-family: 'Georgia', Times, serif; /* Serif font for input text */
+    }
+
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item #password {
+      margin-bottom: 5px; /* Reduce bottom margin before forgot password */
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label {
+      text-align: left;
+      /* height: 0; */ /* Remove fixed height */
+      left: 0;
+      width: 100%;
+       margin-top: 5px; /* Space for forgot password link */
+    }
+
+    .forgot-password {
+      text-align: right; /* Align link to the right */
+       font-size: 0.9em;
+       display: block; /* Ensure it takes full width for alignment */
+    }
+     .forgot-password a {
+        color: #aa80f1; /* Link color */
+        text-decoration: none;
+     }
+      .forgot-password a:hover {
+         text-decoration: underline;
+      }
+
+
+    .forgot-password.center-height {
+      /* position: absolute; */ /* Avoid absolute positioning */
+      /* bottom: 0; */
+      /* clear: right; */
+      cursor: pointer;
+      text-align: right;
+    }
+
+    @keyframes slideInFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(50%)
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label #forgotPassword {
+      /* position: absolute; */ /* Avoid absolute positioning */
+      /* bottom: 0; */
+      /* clear: right; */
+      cursor: pointer;
+      text-align: right;
+       display: block; /* Make it block level */
+    }
+
+    .unified_container .row .panel-default #api .localAccount .rememberMe {
+      /* margin-top: -2rem; */ /* Adjust spacing */
+      margin-top: 10px;
+      text-align: left; /* Align checkbox to left */
+      /* margin-left: 59%; */ /* Remove offset */
+      position: relative;
+      width: 100%; /* Full width */
+       font-size: 0.9em;
+       color: #e0e0ff;
+    }
+     .unified_container .row .panel-default #api .localAccount .rememberMe input[type=checkbox] {
+        margin-right: 5px;
+        vertical-align: middle;
+     }
+
+
+    .unified_container .row .panel-default #api .localAccount .rememberMe.align-to-left {
+      /* margin-top: .5rem; */
+      text-align: left;
+      margin-left: 0;
+      width: 100%
+    }
+
+    .working {
+      display: none
+    }
+
+    .unified_container .row .panel-default #api .claims-provider-list-text-links p,
+    .unified_container .row .panel-default #api .localAccount .create p {
+      text-align: center; /* Center 'Don't have an account?' text */
+      /* margin-top: -3rem; */
+      margin-top: 20px;
+      margin-bottom: 1rem; /* Adjust spacing */
+       font-size: 0.9em;
+       color: #e0e0ff;
+    }
+     .unified_container .row .panel-default #api .claims-provider-list-text-links p a,
+     .unified_container .row .panel-default #api .localAccount .create p a {
+        color: #aa80f1; /* Link color */
+        text-decoration: none;
+        font-weight: bold;
+     }
+      .unified_container .row .panel-default #api .claims-provider-list-text-links p a:hover,
+      .unified_container .row .panel-default #api .localAccount .create p a:hover {
+         text-decoration: underline;
+      }
+
+
+    .unified_container .row .panel-default #api .localAccount .create #createAccount {
+        /* Style as a link */
+        color: #aa80f1;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1em; /* Match surrounding text or be slightly larger */
+        cursor: pointer;
+        /* Remove button-like styles */
+        /* border-radius: .5rem; */
+        /* display: inline-block; */
+        /* font-weight: 400; */
+        /* height: inherit; */
+        /* line-height: 1.3333333; */
+        /* padding: 10px 16px; */
+        /* text-align: center; */
+        /* touch-action: manipulation; */
+        /* user-select: none; */
+        /* white-space: nowrap; */
+        /* -moz-user-select: none; */
+        /* -ms-touch-action: manipulation; */
+        /* -ms-user-select: none; */
+        /* -webkit-user-select: none; */
+        /* width: auto; */
+        /* margin-top: -3rem; */
+        /* animation: .5s ease-out 0s 1 slideInFromRight; */
+    }
+     .unified_container .row .panel-default #api .localAccount .create #createAccount:hover {
+        text-decoration: underline;
+     }
+
+
+    .unified_container .row .panel-default #api .social {
+      /* display: table-footer-group; */ /* Use default block display */
+      position: relative;
+      /* top: 1px; */
+      width: 100%; /* Full width */
+       margin-top: 20px; /* Space above social buttons */
+    }
+
+    /* Social Button Styling */
+    .unified_container .row .panel-default #api .accountButton {
+        /* background-size: 10% 70%; */ /* Adjust icon size/position as needed */
+        /* background-position-x: 3%; */
+        /* background-position-y: 50%; */
+        /* background-repeat: no-repeat; */
+        display: flex; /* Use flex for alignment */
+        align-items: center;
+        justify-content: center; /* Center content */
+        font-size: 1em;
+        height: 50px;
+        width: 100%;
+        /* margin-left: auto; */
+        overflow: hidden;
+        padding: 0 15px; /* Adjust padding */
+        /* max-width: 380px; */ /* Use container width */
+        border: 1px solid #9457eb; /* Use theme border color */
+        background-color: transparent; /* Transparent background */
+        color: #e0e0ff; /* Light text color */
+        border-radius: 8px; /* Theme radius */
+        margin-top: 10px;
+        text-decoration: none;
+        cursor: pointer;
+        box-sizing: border-box;
+         font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; /* Sans-serif */
+    }
+     .unified_container .row .panel-default #api .accountButton img, /* If B2C uses img tag */
+     .unified_container .row .panel-default #api .accountButton i,  /* If FontAwesome etc. */
+     .unified_container .row .panel-default #api .accountButton svg { /* If SVG */
+         margin-right: 10px; /* Space between icon and text */
+         height: 20px; /* Adjust icon size */
+         width: auto;
+     }
+
+
+    .unified_container .row .panel-default #api .accountButton:hover {
+      /* color: #fff; */
+      background-color: rgba(148, 87, 235, 0.1); /* Subtle purple background on hover */
+       border-color: #aa80f1; /* Lighter border */
+    }
+
+    .claims-provider-list-text-links-bottom-under-form {
+      text-align: center; /* Center links below form */
+       margin-top: 20px;
+    }
+     .claims-provider-list-text-links-bottom-under-form a {
+        color: #aa80f1;
+        font-size: 0.9em;
+        text-decoration: none;
+        margin: 0 5px;
+     }
+     .claims-provider-list-text-links-bottom-under-form a:hover {
+        text-decoration: underline;
+     }
+
+
+    /* Review and remove redundant/conflicting styles from this media query if handled above */
+    @media (max-width:100%) { /* Again, seems too broad */
+       /* ... styles ... */
+    }
+
+
+    @media screen and (max-width:320px) {
+       /* Adjust styles for very small screens */
+        .forgot-password {
+           text-align: left; /* Stack forgot password link */
+           margin-top: 5px;
+        }
+        .unified_container .row .panel-default #api .localAccount .rememberMe {
+           margin-top: 10px;
+        }
+
+    }
+
+    /* endinject */
+  </style>
+
+</head>
+
+<body>
+  <!-- Background handled by body style or this div if image needed -->
+   <div id="background_branding_container" data-tenant-branding-background-color="true" style="background-color: #211d3f;">
+    <!-- <img data-tenant-branding-background="true"
+      src="https://login.microsoftonline.com/templates/src/backgrounds/1-1.png" alt="Illustration" /> -->
+  </div>
+  <div class="container unified_container" role="presentation">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="panel panel-default"> <!-- Panel is now transparent -->
+          <div class="panel-body">
+             <!-- Optional Company Logo -->
+             <!-- <img class="companyLogo" data-tenant-branding-logo="true"
+              src="https://login.microsoftonline.com/templates/src/images/logo.svg" alt="Company Logo"> -->
+
+             <!-- Main API Div where B2C injects content -->
+            <div id="api" role="main">              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
