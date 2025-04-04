@@ -1,680 +1,128 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
+    
+    <title>Multi Factor Authentication</title>
 
-    <title>Sign up or sign in</title>
-  
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- Simple Sans-Serif Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-  
     <style id="common">
-      /* Base styles kept for B2C compatibility */
-      @font-face {
-        font-family: 'SegoeUI';
-        src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui.WOFF);
-        font-weight: normal;
-      }
-  
-      @font-face {
-        font-family: 'SegoeUI';
-        src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui_bold.WOFF);
-        font-weight: bold;
-      }
-  
-      /* IDP button styling (can be overridden below) */
-      #AmazonExchange {
-        background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/amazon.svg);
-      }
-      /* ... other IDP styles ... */
-      #LinkedInExchange {
-        background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/linkedin.svg);
-      }
-      #LinkedInExchange:hover {
-         background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/linkedin.svg); /* Keep B2C default hover icon */
-      }
-  
-      .buttons #cancel:before {
-        content: url(https://login.microsoftonline.com/templates/src/images/left-arrow.svg);
-      }
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui.WOFF);
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'SegoeUI';
+            src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui_bold.WOFF);
+            font-weight: bold;
+        }
+        #AmazonExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/amazon.svg);
+        }
+        #AmazonExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/amazon.svg);
+        }
+        #FacebookExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/facebook.svg);
+        }
+        #FacebookExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/facebook.svg);
+        }
+        #GitHubExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/github.svg);
+        }
+        #GitHubExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/github.svg);
+        }
+        #AppleExchange,#AppleManagedExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/apple.svg);
+        }
+        #AppleExchange:hover,#AppleManagedExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/apple.svg);
+        }
+        #GoogleExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/google.svg);
+        }
+        #GoogleExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/google.svg);
+        }
+        #LinkedInExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/linkedin.svg);
+        }
+        #LinkedInExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/linkedin.svg);
+        }
+        #MicrosoftAccountExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/microsoft.svg);
+        }
+        #MicrosoftAccountExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/microsoft.svg);
+        }
+        #QQExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/qq.svg);
+        }
+        #QQExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/qq.svg);
+        }
+        #TwitterExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/twitter.svg);
+        }
+        #TwitterExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/twitter.svg);
+        }
+        #WeChatExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/wechat.svg);
+        }
+        #WeChatExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/wechat.svg);
+        }
+        #WeiboExchange {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/weibo.svg);
+        }
+        #WeiboExchange:hover {
+          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/weibo.svg);
+        }
+        .buttons #cancel:before {
+            content: url(https://login.microsoftonline.com/templates/src/images/left-arrow.svg);
+        }
     </style>
     <style id="idpselector">
-      /* Base styles kept for B2C compatibility */
-      #SignInWithLogonNameExchange,
-      #SignUpWithLogonEmailExchange,
-      #SignUpWithLogonNameExchange {
-        background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/local.svg);
-      }
-      #SignInWithLogonNameExchange:hover,
-      #SignUpWithLogonEmailExchange:hover,
-      #SignUpWithLogonNameExchange:hover {
-        background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/local.svg);
-      }
-      #SignUpWithLogonEmailExchange.text-link {
-        background-image: none;
-        background-color: transparent !important;
-      }
-      #SignUpWithLogonEmailExchange.text-link:hover {
-        background-image: none;
-        background-color: transparent !important;
-      }
+        #SignInWithLogonNameExchange, #SignUpWithLogonEmailExchange, #SignUpWithLogonNameExchange {
+            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/local.svg);
+        }
+        #SignInWithLogonNameExchange:hover, #SignUpWithLogonEmailExchange:hover, #SignUpWithLogonNameExchange:hover {
+            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/local.svg);
+        }
+        #SignUpWithLogonEmailExchange.text-link {
+            background-image: none;
+            background-color: transparent !important;
+        }
+        #SignUpWithLogonEmailExchange.text-link:hover {
+            background-image: none;
+            background-color: transparent !important;
+        }
     </style>
-  
+
     <style>
-      /* Following are generated styles via gulp. */
-      /* inject: css */
-      html {
-        background: 0 0
-      }
-  
-      body {
-          /* Use a dark background similar to the image */
-          background-color: #2a254a; /* Dark blue/purple */
-          /* Use a clean Sans-Serif font */
-          font-family: 'Nunito', sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
-          color: #c0bcdc; /* Default light text color (light purple/grey) */
-          background-attachment: fixed;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          text-align: left;
-      }
-  
-      p {
-        margin: 0;
-        color: #c0bcdc; /* Ensure paragraphs use the default light text color */
-      }
-  
-      a {
-         color: #a080ff; /* Brighter purple for links */
-         text-decoration: none;
-      }
-      a:hover {
-          color: #c0bcdc;
-          text-decoration: underline;
-      }
-      a:focus {
-        outline: 0
-      }
-  
-      /* Input and Select base - remove default borders */
-      input,
-      select {
-        border: none;
-      }
-  
-  
-      /* Style text, email, and password inputs */
-      #attributeList ul li input[type="text"],
-      #attributeList ul li input[type="email"],
-      #attributeList ul li input[type="password"] {
-          height: 45px; /* Slightly smaller height */
-          width: 100%;
-          border-radius: 8px;
-          background-color: #4a456a; /* Slightly lighter purple background */
-          border: 1px solid #6f6c8d; /* Subtle purple/grey border */
-          color: #FFFFFF; /* White text color when typing */
-          padding: 0 15px; /* Horizontal padding */
-          font-size: 1em;
-          box-sizing: border-box;
-          text-indent: 0;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-          margin-top: 8px; /* Space below label */
-          font-family: inherit; /* Use body font */
-      }
-  
-      /* Style placeholders specifically */
-      #attributeList ul li input::placeholder { /* Standard */
-          color: #8a85a0; /* Medium purple/grey placeholder text */
-          font-style: normal; /* No italics */
-          opacity: 1;
-      }
-      #attributeList ul li input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-          color: #8a85a0;
-          font-style: normal;
-          opacity: 1;
-      }
-      #attributeList ul li input::-moz-placeholder { /* Firefox */
-          color: #8a85a0;
-          font-style: normal;
-          opacity: 1;
-      }
-      #attributeList ul li input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-          color: #8a85a0;
-          font-style: normal;
-          opacity: 1;
-      }
-      #attributeList ul li input::-ms-input-placeholder { /* Microsoft Edge */
-          color: #8a85a0;
-          font-style: normal;
-          opacity: 1;
-      }
-  
-  
-      img[data-tenant-branding-background=true] {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
-        position: fixed;
-        left: 0;
-        overflow: hidden;
-        top: 0
-      }
-  
-      div[data-tenant-branding-background-color=true] {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        z-index: -1;
-        background-color: inherit; /* Use body background */
-      }
-  
-      .container {
-        text-align: center;
-        width: 100%;
-        display: table;
-        min-height: 100vh; /* Ensure container takes full height */
-        height: auto; /* Allow shrinking */
-        padding: 20px 0; /* Add some vertical padding */
-      }
-  
-       /* Main content area where B2C injects API */
-      #api {
-        margin: 0 auto;
-        max-width: 420px; /* Limit form width */
-        padding: 30px 40px; /* Inner padding */
-        background-color: #3a355a; /* Darker purple container background */
-        border-radius: 15px; /* Rounded corners */
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      }
-  
-       /* Heading style */
-      .heading h1 {
-          margin-bottom: 25px;
-          color: #FFFFFF; /* White color for heading */
-          font-size: 2.2em;
-          font-weight: 700; /* Bold */
-          font-family: inherit; /* Use body font */
-          text-align: center; /* Center heading */
-      }
-  
-       /* Center the content column */
-      .col-lg-6 {
-        max-width: none; /* Override default max-width */
-        width: 100%;
-        float: none;
-        display: inline-block;
-        vertical-align: middle; /* Center vertically */
-        padding: 0;
-        background-color: transparent;
-      }
-  
-      .row {
-        width: 100%;
-        margin: 0;
-        display: table-cell;
-        vertical-align: middle;
-      }
-  
-      ul {
-        padding: 0;
-        margin: 0;
-      }
-  
-      #simplemodal-container .simplemodal-data {
-         /* Keep for B2C compatibility if needed, adjust colors if necessary */
-        padding: 5px 8px;
-        overflow: hidden;
-        background-color: #4a456a; /* Match input background */
-        border-radius: 3px;
-        font-style: italic;
-        color: #c0bcdc;
-      }
-  
-      /* --- Button Styling --- */
-  
-      /* General Button Reset/Base */
-      button {
-          font-family: inherit; /* Use body font */
-          cursor: pointer;
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 1em;
-          height: 45px;
-          padding: 0 20px;
-          transition: all 0.2s ease-in-out;
-          box-sizing: border-box;
-          display: flex; /* Use flex for icon alignment */
-          align-items: center;
-          justify-content: center;
-      }
-  
-      /* Primary Button Style (e.g., Sign Up, Continue) */
-      .buttons button#continue,
-      .buttons button#next,
-      #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send], /* Apply to verification send */
-      #attributeList ul li .attrEntry .verificationControlContent .sendCode {
-          background: linear-gradient(90deg, #8e62ff, #6c4dff); /* Purple gradient */
-          color: #FFFFFF;
-          border: none;
-          width: 100%; /* Full width */
-          margin-top: 20px;
-      }
-      .buttons button#continue:hover,
-      .buttons button#next:hover,
-      #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send]:hover,
-      #attributeList ul li .attrEntry .verificationControlContent .sendCode:hover {
-          background: linear-gradient(90deg, #7a4ff9, #583bc9); /* Darker gradient on hover */
-          box-shadow: 0 4px 15px rgba(116, 77, 255, 0.3); /* Add glow on hover */
-      }
-  
-      /* Secondary/Outline Button Style (e.g., Cancel, Social Logins) */
-      .buttons #cancel,
-      .accountButton, /* Class often used for social buttons */
-      #LocalAccountSigninEmailExchange, /* Apply to specific B2C buttons */
-      #LocalAccountSigninUsernameExchange,
-      #SignInWithLogonEmailExchange,
-      #SignInWithLogonNameExchange,
-      #SignUpWithLogonEmailExchange,
-      #SignUpWithLogonNameExchange {
-          background-color: transparent;
-          border: 1px solid #6f6c8d; /* Subtle purple/grey border */
-          color: #c0bcdc; /* Light text color */
-          width: 100%;
-          margin-top: 10px; /* Space between buttons */
-           padding: 0 15px; /* Adjust padding */
-      }
-       /* Hover for Secondary/Outline */
-      .buttons #cancel:hover,
-      .accountButton:hover,
-      #LocalAccountSigninEmailExchange:hover,
-      #LocalAccountSigninUsernameExchange:hover,
-      #SignInWithLogonEmailExchange:hover,
-      #SignInWithLogonNameExchange:hover,
-      #SignUpWithLogonEmailExchange:hover,
-      #SignUpWithLogonNameExchange:hover {
-        background-color: rgba(111, 108, 141, 0.15); /* Slight background tint */
-        border-color: #a080ff; /* Brighter border */
-        color: #FFFFFF; /* White text */
-      }
-  
-      /* Adjust Social Button Icons/Text Alignment */
-       .accountButton img,
-       .accountButton i,
-       .accountButton svg {
-           margin-right: 10px;
-           height: 18px; /* Adjust icon size */
-           width: auto;
-           filter: grayscale(50%) opacity(0.8); /* Subdue default color icons slightly */
-       }
-       .accountButton:hover img,
-       .accountButton:hover i,
-       .accountButton:hover svg {
-          filter: none; /* Restore color on hover */
-       }
-       /* Specific overrides for B2C default buttons if needed */
-        #LocalAccountSigninEmailExchange,
-        #LocalAccountSigninUsernameExchange,
-        #SignInWithLogonEmailExchange,
-        #SignInWithLogonNameExchange,
-        #SignUpWithLogonEmailExchange,
-        #SignUpWithLogonNameExchange {
-           background-size: 18px; /* Adjust default icon size */
-           background-position: 15px center; /* Adjust icon position */
-           padding-left: 45px; /* Make space for icon */
-           justify-content: flex-start; /* Align text left */
-        }
-  
-  
-       /* Remove specific hover background colors from original B2C template */
-      #AmazonExchange:hover, #FacebookExchange:hover, #GitHubExchange:hover, #AppleExchange:hover, #AppleManagedExchange:hover, #GoogleExchange:hover, #LinkedInExchange:hover, #MicrosoftAccountExchange:hover, #QQExchange:hover, #TwitterExchange:hover, #WeChatExchange:hover, #WeiboExchange:hover {
-        background-color: transparent !important; /* Use the standard outline hover */
-      }
-  
-      .buttons button[aria-disabled=true] {
-        opacity: 0.5;
-         pointer-events: none; /* Prevent clicks */
-          background: #4a456a; /* Use a disabled background */
-      }
-  
-      .buttons button:not([aria-disabled=true]) {
-        opacity: 1
-      }
-  
-       /* Cancel button specific positioning (if used) */
-      .buttons #cancel {
-         /* Use standard outline style above, remove absolute positioning */
-         width: auto; /* Allow shrink-wrapping */
-         position: static;
-         margin: 15px auto 0; /* Center below primary button */
-         display: inline-block; /* Allow centering */
-         padding: 0 30px; /* More padding */
-      }
-      .buttons #cancel:before {
-         /* Hide default arrow */
-         display: none;
-      }
-  
-  
-      /* --- Form Element Styling --- */
-  
-      #attributeList ul {
-        padding: 0;
-        margin: 0;
-      }
-  
-      #attributeList ul li {
-        list-style: none;
-        margin: 1.2rem 0; /* Vertical spacing between fields */
-        text-align: left;
-      }
-  
-      label,
-      #attributeList ul li label {
-          font-weight: 600;
-          display: block;
-          text-align: left;
-          float: none;
-          color: #FFFFFF; /* White labels */
-          margin-bottom: 8px;
-          font-size: 0.95em;
-          font-family: inherit;
-      }
-  
-      /* Ensure default labels are shown */
-      #attributeList ul li.EmailBox label,
-      #attributeList ul li.Password label,
-      #attributeList ul li.TextBox label {
-         display: block !important;
-      }
-      /* Hide specific B2C labels if needed */
-       #attributeList ul li label[for=country],
-       #attributeList ul li label[for=cpiminternal_legalCountry],
-       #attributeList ul li label[for=cpiminternal_dateOfBirth] {
-         /* Keep original styles if layout requires them */
-         /* Example: display: inline-block !important; */
-       }
-  
-       /* Validation Error Style */
-      #attributeList ul li .attrEntry.validate input.invalid,
-      #attributeList ul li .attrEntry.validate input:invalid {
-        border: 1px solid #ff6b6b; /* Red border for invalid */
-         background-color: rgba(255, 107, 107, 0.1); /* Slight red background */
-      }
-       /* Add item level error display styling */
-       #attributeList ul li .attrEntry .itemLevel {
-           color: #ff6b6b; /* Red error text */
-           font-size: 0.85em;
-           margin-top: 5px;
-           display: block; /* Ensure visible */
-       }
-  
-  
-       /* --- Verification Control Styling --- */
-      #attributeList ul li .attrEntry .verify {
-        margin-top: 1rem;
-        padding-bottom: 10px;
-        position: relative
-      }
-      #attributeList ul li .attrEntry .verificationControlContent .buttons {
-        margin-top: 1rem;
-        padding-bottom: 10px;
-        position: relative
-      }
-  
-      /* Verification Buttons - use secondary style for verify/resend/edit */
-      #attributeList ul li .attrEntry .verify .verifyButton,
-      #attributeList ul li .attrEntry .verificationControlContent .verifyCode,
-      #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend],
-      #attributeList ul li .attrEntry .verificationControlContent .sendNewCode,
-      #attributeList ul li .attrEntry .verify .editButton,
-      #attributeList ul li .attrEntry .verificationControlContent .changeClaims {
-          background-color: transparent;
-          border: 1px solid #6f6c8d;
-          color: #c0bcdc;
-          width: auto; /* Allow shrink */
-          height: 40px; /* Smaller height */
-          font-size: 0.9em;
-          margin-top: 10px;
-          margin-right: 5px; /* Space between buttons if inline */
-      }
-       #attributeList ul li .attrEntry .verify .verifyButton:hover,
-       #attributeList ul li .attrEntry .verificationControlContent .verifyCode:hover,
-       #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend]:hover,
-       #attributeList ul li .attrEntry .verificationControlContent .sendNewCode:hover,
-       #attributeList ul li .attrEntry .verify .editButton:hover,
-       #attributeList ul li .attrEntry .verificationControlContent .changeClaims:hover {
-           background-color: rgba(111, 108, 141, 0.15);
-           border-color: #a080ff;
-           color: #FFFFFF;
-       }
-        /* Keep Send button using primary style */
-        /* #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send],
-        #attributeList ul li .attrEntry .verificationControlContent .sendCode { ... primary style applied above ... } */
-  
-      @media screen and (-ms-high-contrast:active) {
-        /* High contrast adjustments - keep for accessibility */
-        #attributeList ul li .attrEntry .verify button,
-        .buttons #continue, .accountButton {
-          border: 1px dashed #fff !important
-        }
-        #attributeList ul li .attrEntry .verify button:hover,
-        .buttons #continue:hover, .accountButton:hover {
-          border: 1px solid #fff !important
-        }
-      }
-  
-      #attributeList ul li .attrEntry .verify #email_ver_input_label {
-        display: none !important /* Keep if B2C hides this */
-      }
-  
-      /* Working indicator */
-      #api .working {
-        background: url(data:image/gif;base64,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) no-repeat;
-        height: 30px;
-        width: auto;
-        background-position: center bottom;
-         filter: hue-rotate(200deg) brightness(1.5); /* Adjust color to match theme */
-      }
-  
-      /* --- Dropdown/Select Styling --- */
-      #attributeList ul li .attrEntry .dropdown_single,
-      #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
-          height: 45px;
-          width: 100%;
-          border-radius: 8px;
-          background-color: #4a456a; /* Match input background */
-          border: 1px solid #6f6c8d; /* Match input border */
-          color: #FFFFFF; /* White text */
-          padding-left: 15px;
-          padding-right: 35px; /* Make space for arrow */
-          font-size: 1em;
-          box-sizing: border-box;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-          background-image: url('data:image/svg+xml;utf8,&lt;svg fill="%23c0bcdc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">&lt;path d="M7 10l5 5 5-5z"/>&lt;path d="M0 0h24v24H0z" fill="none"/>&lt;/svg>'); /* Light purple arrow */
-          background-repeat: no-repeat;
-          background-position: right 10px center;
-          background-size: 20px;
-          margin-top: 8px; /* Space below label */
-          font-family: inherit; /* Use body font */
-      }
-  
-      /* Date Input Alignment */
-      #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date {
-        display: flex;
-        width: 100%;
-        gap: 10px; /* Space between date selects */
-      }
-      #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
-         flex-grow: 1;
-         flex-basis: 0; /* Allow equal distribution initially */
-          /* Use base select styles defined above */
-          height: 45px;
-          padding-left: 15px;
-      }
-      /* Adjust flex-basis for specific date parts if needed */
-       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_day.day { flex-basis: 70px; flex-grow: 0.5; }
-       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_month.month { flex-grow: 1.2; }
-       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_year.year { flex-grow: 1; }
-  
-  
-      #attributeList ul li .helpLink {
-        display: none; /* Keep hidden unless needed */
-      }
-  
-      #attributeVerification .buttons {
-        margin-top: 20px; /* Reduce space */
-      }
-  
-      /* --- File Input Styling --- */
-      #attributeList ul li.Attribute.Complex.FileUpload {
-           background-color: #4a456a; /* Match input */
-           border: 1px solid #6f6c8d;
-           border-radius: 8px;
-           padding: 0 0 0 15px; /* Padding left, control height with button/text */
-           display: flex;
-           align-items: center;
-           width: 100%;
-           box-sizing: border-box;
-           color: #8a85a0; /* Color for "No file chosen" */
-           height: 45px;
-           margin-top: 8px;
-           overflow: hidden; /* Hide native input parts */
-           font-family: inherit;
-      }
-       /* Style the proxy button */
-       #attributeList ul li input[type="file"]::file-selector-button {
-          background: linear-gradient(90deg, #8e62ff, #6c4dff); /* Gradient */
-          color: white;
-          border: none;
-          border-radius: 5px;
-          padding: 0 15px;
-          margin-right: 10px;
-          cursor: pointer;
-          font-weight: 600;
-          font-family: inherit;
-          height: 30px; /* Button height within container */
-          transition: background 0.2s ease-in-out;
-       }
-        #attributeList ul li input[type="file"]::file-selector-button:hover {
-           background: linear-gradient(90deg, #7a4ff9, #583bc9); /* Darker gradient */
-        }
-        /* Style the file input text ('No file chosen') */
-        #attributeList ul li input[type="file"] {
-            border: none;
-            background: transparent;
-            padding: 0;
-            margin: 0;
-            width: auto;
-            color: #8a85a0;
-            font-style: normal;
-            flex-grow: 1;
-            font-size: 0.9em;
-            height: 100%; /* Fill container height */
-            line-height: 43px; /* Align text vertically */
-        }
-  
-  
-      /* --- "or" Separator Styling --- */
-       .divider {
-           display: flex;
-           align-items: center;
-           text-align: center;
-           color: #6f6c8d; /* Match border color */
-           margin: 25px 0;
-           font-family: inherit;
-           font-size: 0.9em;
-           text-transform: uppercase;
-           font-weight: 600;
-       }
-       .divider hr,
-       .divider::before,
-       .divider::after {
-           content: '';
-           flex: 1;
-           border: none;
-           border-bottom: 1px solid #4a456a; /* Use a darker line color */
-           margin: 0 0.75em;
-       }
-       .divider span { /* If B2C uses a span */
-          padding: 0 0.5em;
-       }
-  
-  
-      /* --- Responsive Adjustments --- */
-      @media screen and (max-width:600px) {
-        #api {
-            padding: 20px 25px; /* Reduce padding */
-            max-width: 90%; /* Allow more width */
-        }
-        .heading h1 {
-           font-size: 1.8em; /* Smaller heading */
-        }
-         #attributeList ul li input[type="text"],
-         #attributeList ul li input[type="email"],
-         #attributeList ul li input[type="password"],
-         #attributeList ul li .attrEntry .dropdown_single,
-         #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select,
-         #attributeList ul li.Attribute.Complex.FileUpload {
-            height: 42px; /* Slightly smaller */
-         }
-          #attributeList ul li input[type="file"]::file-selector-button {
-             height: 28px;
-             padding: 0 10px;
-             font-size: 0.9em;
-          }
-         #attributeList ul li input[type="file"] { line-height: 40px; }
-  
-         button, .buttons button#continue, .buttons button#next, .accountButton {
-             height: 42px; /* Smaller buttons */
-             font-size: 0.95em;
-         }
-         #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date {
-             flex-direction: column; /* Stack date fields */
-             gap: 8px;
-         }
-         #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
-              width: 100% !important;
-              flex-basis: auto !important;
-         }
-      }
-  
-      /* Keep original B2C responsive overrides if needed for specific flows */
-      @media screen and (max-width:100%) {
-         /* ... Review and retain necessary B2C styles ... */
-      }
-  
-      .panel, .panel_layout, .panel_layout_row { height: auto; } /* Prevent fixed heights */
-      body { min-height: 100vh; } /* Ensure body covers viewport */
-  
-  
-      @media only screen and (max-width:600px) {
-        img[data-tenant-branding-background=true] { } /* Keep background */
-        .container { background-color: transparent; } /* Use body background */
-        .container .row .panel-default {
-          border-radius: 0;
-          border: none;
-          box-shadow: none;
-          background-color: transparent; /* Make panel transparent */
-        }
-         #api { border-radius: 0; } /* Remove rounding on mobile if desired */
-      }
-  
-      /* endinject */
+        /* Following are generated styles via gulp. */
+        /* inject: css */
+        html{background:0 0}body{font-family:Segoe UI,SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;background-attachment:fixed;background-color:#fff;background-position:center;background-repeat:no-repeat;background-size:cover;text-align:left;font:-apple-system-body}p{margin:0}a:focus{outline:0}input,select{border:1px solid #605e5c}input::placeholder{color:#6a6a6a;opacity:1}img[data-tenant-branding-background=true]{width:100%;height:100%;object-fit:cover;z-index:0;position:fixed;left:0;overflow:hidden;top:0}div[data-tenant-branding-background-color=true]{width:100%;height:100%;position:fixed;z-index:0}.container{text-align:center;width:100%;display:table;height:100vh;padding:0}#api{margin:0 auto}.heading h1{margin-bottom:20px}.col-lg-6{max-width:470px;width:100%;float:none;display:inline-block;vertical-align:top;padding:0}.row{width:100%;margin:0;display:table-cell;vertical-align:middle}ul{padding:0}#simplemodal-container .simplemodal-data{padding:5px 8px;overflow:hidden;background-color:#fff;border-radius:3px;font-style:italic}#LocalAccountSigninEmailExchange,#LocalAccountSigninUsernameExchange,#SignInWithLogonEmailExchange,#SignInWithLogonNameExchange,#SignUpWithLogonEmailExchange,#SignUpWithLogonNameExchange{background-color:#296ec6;background-image:url(none);background-size:10%;background-position-x:95%;background-position-y:50%;background-repeat:no-repeat;border-radius:.5rem;width:100%;width:100%;font-size:1em;margin-left:auto}#LocalAccountSigninEmailExchange:hover,#LocalAccountSigninUsernameExchange:hover,#SignInWithLogonEmailExchange:hover,#SignInWithLogonNameExchange:hover,#SignUpWithLogonEmailExchange:hover,#SignUpWithLogonNameExchange:hover{background-color:#1662c7!important}#AmazonExchange:hover{background-color:#36474f!important}#FacebookExchange:hover{background-color:#3b5595!important}#GitHubExchange:hover{background-color:#0f0f0f!important}#AppleExchange:hover,#AppleManagedExchange:hover{background-color:#0f0f0f!important}#GoogleExchange:hover{background-color:#c64a29!important}#LinkedInExchange:hover{background-color:#0274b3!important}#MicrosoftAccountExchange:hover{background-color:#01a4ef!important}#QQExchange:hover{background-color:#1a97df!important}#TwitterExchange:hover{background-color:#1da1f2!important}#WeChatExchange:hover{background-color:#4cc522!important}#WeiboExchange:hover{background-color:#e81123!important}.buttons button{margin:0 auto;width:60%;height:50px;background-color:#296ec6;border-radius:.5rem;border:none;color:#fff;font-size:1em;margin-top:10px}.buttons button:hover{background-color:#1662c7;border-color:#204d74}.buttons button[aria-disabled=true]{opacity:.3}.buttons button:not([aria-disabled=true]){opacity:1}.buttons #cancel{padding:0;margin-left:auto;background:0 0;border:0;width:inherit;position:absolute;background-color:transparent;top:2px;left:15px;font-size:1em;color:#505050;box-shadow:none;text-align:left}.buttons #cancel:hover{color:#000!important}.buttons #cancel:before{padding:10px;vertical-align:sub;zoom:90%;display:inline-block}#attributeList ul{padding:0}#attributeList ul li{list-style:none;margin:1rem 0}label{font-weight:600}#attributeList ul li label{display:block;text-align:left;float:none}#attributeList ul li.EmailBox label,#attributeList ul li.Password label,#attributeList ul li.TextBox label{display:none!important}#attributeList ul li label[for=country]{float:left;display:inline-block!important;margin-bottom:.5rem}#attributeList ul li label[for=cpiminternal_legalCountry]{float:none;display:block!important;text-align:left;margin-bottom:.5rem}#attributeList ul li label[for=cpiminternal_dateOfBirth]{float:none;text-align:left;display:block!important;margin-bottom:.5rem}#attributeList ul li input{height:50px;width:70%;border-radius:.5rem;text-indent:20px}#attributeList ul li input::-webkit-input-placeholder{text-indent:20px}#attributeList ul li .attrEntry.validate input.invalid,#attributeList ul li .attrEntry.validate input:invalid{border:1px solid #b00}#attributeList ul li .attrEntry .verify{margin-top:2rem;padding-bottom:10px;position:relative}#attributeList ul li .attrEntry .verificationControlContent .buttons{margin-top:2rem;padding-bottom:10px;position:relative}#attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send]{width:60%;height:50px;background-color:#296ec6;color:#fff;border-radius:.5rem}#attributeList ul li .attrEntry .verificationControlContent .sendCode{width:60%;height:50px;background-color:#296ec6;color:#fff;border-radius:.5rem}#attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send]:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verificationControlContent .sendCode:hover{background-color:#1662c7}@media screen and (-ms-high-contrast:active){#attributeList ul li .attrEntry .verify button,.buttons #continue{border:1px dashed #fff!important}#attributeList ul li .attrEntry .verify button:hover,.buttons #continue:hover{border:1px solid #fff!important}}#attributeList ul li .attrEntry .verify .verifyButton{width:inherit;padding:0 20px;height:50px;background-color:#296ec6;color:#fff;margin-right:5px;border-radius:.5rem}#attributeList ul li .attrEntry .verificationControlContent .verifyCode{width:inherit;padding:0 20px;height:50px;background-color:#296ec6;color:#fff;margin-right:5px;border-radius:.5rem}#attributeList ul li .attrEntry .verify .verifyButton:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verificationControlContent .verifyCode:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend]{width:inherit;padding:0 20px;border:0;font-size:1em;height:50px;right:0;bottom:-38px;background-color:#296ec6;color:#fff;border-radius:.5rem}#attributeList ul li .attrEntry .verificationControlContent .sendNewCode{width:inherit;padding:0 20px;border:0;font-size:1em;height:50px;right:0;bottom:-38px;background-color:#296ec6;color:#fff;border-radius:.5rem}#attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend]:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verificationControlContent .sendNewCode:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verify .editButton{border:none;color:#fff;background-color:#296ec6;width:60%;height:50px;border-radius:.5rem}#attributeList ul li .attrEntry .verificationControlContent .changeClaims{border:none;color:#fff;background-color:#296ec6;width:60%;height:50px;border-radius:.5rem}#attributeList ul li .attrEntry .verify .editButton:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verificationControlContent .changeClaims:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verify #email_ver_input_label{display:none!important}#api .working{background:url(data:image/gif;base64,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) no-repeat;height:30px;width:auto;background-position:center bottom}#attributeList ul li .attrEntry .itemLevel{display:none}input[type=email],input[type=password],input[type=text]{-webkit-appearance:none}#attributeList ul li .attrEntry .dropdown_single{height:45px;border-radius:.5rem;width:100%;padding-left:15px}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date{display:table;width:100%}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select{border-radius:.5rem;display:inline-block;height:50px;padding-left:15px}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_day.day{margin-right:3%;width:23%}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_month.month{margin-right:3%;width:38%}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_year.year{width:33%}#attributeList ul li .helpLink{display:none}#attributeVerification .buttons{margin-top:30px}@media screen and (max-width:100%){.row .panel-default .panel-body{margin-top:40px}.row .panel-default .panel-body .branding img{display:block;height:80px;width:auto;margin:0 auto}.row .panel-default .panel-body .branding h1{display:none}.row .panel-default .panel-body h3{font-size:1.5em;margin-top:15px}#attributeVerification #attributeList ul li input{width:60%;height:40px;border-radius:.5rem;border:1px solid #605e5c;text-indent:10px}#attributeVerification #attributeList ul li input::-webkit-input-placeholder{text-indent:10px}#attributeVerification #attributeList ul li #email{width:65%;float:left;position:relative;z-index:2}#attributeVerification #attributeList ul li #email_ver_but_verify{background:0 0;border:0;color:#496ad8;font-size:1em;position:relative;right:0;top:60px;font-size:1.1em;width:auto;z-index:1;height:20px}#attributeVerification #attributeList ul li #email_ver_input{min-width:50%;width:60%;float:left}#attributeVerification #attributeList ul li #email_ver_but_resend{top:10px;font-size:1.1em;height:20px}#attributeVerification #attributeList ul li .attrEntry #email{height:40px}#attributeVerification #attributeList ul li .attrEntry .verify #email_ver_but_send:after{content:" Verify";font-size:1.1em;font-style:bold;margin-left:40%}#attributeVerification #attributeList ul li .attrEntry .verify #email_ver_but_send{height:40px;width:auto;float:right;overflow:hidden;text-indent:-200px}#attributeVerification #attributeList ul li .attrEntry .verify #email_ver_but_edit{margin-bottom:15px;border:none;color:#fff;background-color:#496ad8;border-radius:.5rem;font-size:1em;box-shadow:0 0 40px 2px #dae1f7;width:30%;height:40px;overflow:hidden;padding-top:6px;margin-left:40%}#attributeVerification #attributeList ul li .attrEntry .verify:after{content:" ";display:block;clear:both}#attributeVerification #attributeList #verifying_blurb{margin-top:15px}#attributeVerification .buttons #continue{height:40px}#attributeVerification .buttons #cancel{font-size:1em;left:40%}}.panel,.panel_layout,.panel_layout_row,body,html{height:100%}@media only screen and (max-width:600px){img[data-tenant-branding-background=true]{display:none}.container{background-color:#fff}.container .row .panel-default{border-radius:0;border:none;box-shadow:none}}
+        /* endinject */
     </style>
-  
-  </head>
+    
+    
+    <style>
+        /* Following are generated styles via gulp. */
+        /* inject: css */
+        .buttons button:hover{background-image:none}.phonefactor_container .row .panel-default{margin:auto;height:100%;background-color:#fff;min-width:400px}.phonefactor_container .row .panel-body{margin:0 auto;max-width:400px;width:auto;padding:4.2rem 1rem}.phonefactor_container .row .panel-body img{height:70px;margin:0 auto}button#sendCode,button#verifyCode,button#verifyPhone{margin-top:2rem;width:60%;height:50px}#api #codeVerification{text-align:left;margin-top:1rem}#api .working{display:none}#codeVerification #verificationCode{border-radius:.5rem;width:100%;height:50px;border:1px solid #6a6a6a;text-indent:20px;outline:0}#codeVerification #verificationCode:focus{border:2px solid #000}#codeVerification #retryCode{cursor:pointer;color:#337ab7;text-decoration:none}#codeVerification #retryCode:focus,#codeVerification #retryCode:hover{text-decoration:underline}#codeVerification .error.itemLevel p{color:#d30000}#api #phonefactor_initial .intro p{text-align:left}#api p{text-align:left;margin-top:1rem}#api .intro p{margin-top:20px}#api #phoneEntry.phoneEntry{margin-top:10px}#api #phoneEntry.phoneEntry .input .code{text-align:left}#api #phoneEntry .input .code #countryCode{height:50px;border-radius:.5rem;width:100%;margin-bottom:15px;padding-left:15px}#api #phoneEntry .input .code #countryCode:focus{border:2px solid #000}#api #phoneEntry .input .error.itemLevel p{color:#d30000}#api #phoneEntry.phoneEntry .input .number{text-align:left}#api #phoneEntry.phoneEntry .input .number #number{border-radius:.5rem;width:100%;height:50px;border:1px solid #6a6a6a;text-indent:20px;outline:0}#api #phoneEntry.phoneEntry .input .number #number:focus{border:2px solid #000}#api #phonefactor_initial #phoneEntry select#countryCode{height:45px;border-radius:.5rem;width:100%;margin-bottom:15px;padding-left:15px;border:1px solid #6a6a6a}#api #phoneEntry select:hover{border-color:#888}#api #phoneEntry select option{font-weight:400}#api #phoneEntry input#localNumber{border-radius:.5rem;width:100%;height:50px;border:1px solid #6a6a6a;text-indent:20px;outline:0}#api #phonefactor_initial #phoneEntry input#localNumber:focus{border:2px solid #000}.phoneNumbers .phoneNumber .displayName,.phoneNumbers .phoneNumber .type{display:none}.phoneNumbers .phoneNumber .number,.phoneNumbers .phoneNumber label[for="1"]{margin-top:10px}
+        /* endinject */
+    </style>
+
+</head>
 <body>
     <div id="background_branding_container" data-tenant-branding-background-color="true">
       <img data-tenant-branding-background="true" src="./bg.jpg" alt="Illustration"/>
@@ -682,9 +130,13 @@
     <div class="container  phonefactor_container " role="presentation">
         <div class="row">
             <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
                         <img class="companyLogo" data-tenant-branding-logo="true" src="https://login.microsoftonline.com/templates/src/images/logo.svg" alt="Company Logo">
                         <div id="api" role="main">
                         </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
