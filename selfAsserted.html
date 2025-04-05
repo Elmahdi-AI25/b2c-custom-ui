@@ -1,961 +1,1208 @@
-
 <!DOCTYPE html>
 <html>
-<head>
-    
-    <title>User details</title>
 
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <style id="common">
-      /* Base styles kept for B2C compatibility */
-      @font-face {
-        font-family: 'SegoeUI';
-        src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui.WOFF);
-        font-weight: normal;
+<head>
+
+  <title>User details</title>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <style id="common">
+    /* Base styles kept for B2C compatibility */
+    @font-face {
+      font-family: 'SegoeUI';
+      src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui.WOFF);
+      font-weight: normal;
+    }
+
+    @font-face {
+      font-family: 'SegoeUI';
+      src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui_bold.WOFF);
+      font-weight: bold;
+    }
+
+    /* IDP button styling (can be overridden below) */
+    #AmazonExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/amazon.svg);
+    }
+
+    /* ... other IDP styles ... */
+    #LinkedInExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/linkedin.svg);
+    }
+
+    #LinkedInExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/linkedin.svg);
+      /* Keep B2C default hover icon */
+    }
+
+    .buttons #cancel:before {
+      content: url(https://login.microsoftonline.com/templates/src/images/left-arrow.svg);
+    }
+  </style>
+  <style id="idpselector">
+    /* Base styles kept for B2C compatibility */
+    #SignInWithLogonNameExchange,
+    #SignUpWithLogonEmailExchange,
+    #SignUpWithLogonNameExchange {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/local.svg);
+    }
+
+    #SignInWithLogonNameExchange:hover,
+    #SignUpWithLogonEmailExchange:hover,
+    #SignUpWithLogonNameExchange:hover {
+      background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/local.svg);
+    }
+
+    #SignUpWithLogonEmailExchange.text-link {
+      background-image: none;
+      background-color: transparent !important;
+    }
+
+    #SignUpWithLogonEmailExchange.text-link:hover {
+      background-image: none;
+      background-color: transparent !important;
+    }
+  </style>
+
+  <style>
+    /* Following are generated styles via gulp. */
+    /* inject: css */
+    html {
+      background: 0 0
+    }
+
+    body {
+      /* Use a dark background similar to the image */
+      background-color: #2a254a;
+      /* Dark blue/purple */
+      /* Use a clean Sans-Serif font */
+      font-family: 'Nunito', sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
+      color: #001163;
+      /* Default light text color (light purple/grey) */
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      text-align: left;
+    }
+
+    p {
+      margin: 0;
+      color: #001163;
+      /* Ensure paragraphs use the default light text color */
+    }
+
+    a {
+      color: #013fe0;
+      /* Brighter purple for links */
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #001163;
+      text-decoration: underline;
+    }
+
+    a:focus {
+      outline: 0
+    }
+
+    /* Input and Select base - remove default borders */
+    input,
+    select {
+      border: none;
+    }
+
+
+    /* Style text, email, and password inputs */
+    #attributeList ul li input[type="text"],
+    #attributeList ul li input[type="email"],
+    #attributeList ul li input[type="password"] {
+      height: 45px;
+      /* Slightly smaller height */
+      width: 100%;
+      border-radius: 8px;
+      background-color: #ffffff;
+      /* Slightly lighter purple background */
+      border: 1px solid #001163;
+      /* Subtle purple/grey border */
+      color: #001163;
+      /* White text color when typing */
+      padding: 0 15px;
+      /* Horizontal padding */
+      font-size: 1em;
+      box-sizing: border-box;
+      text-indent: 0;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin-top: 8px;
+      /* Space below label */
+      font-family: inherit;
+      /* Use body font */
+    }
+
+    /* Style placeholders specifically */
+    #attributeList ul li input::placeholder {
+      /* Standard */
+      color: #013fe0;
+      /* Medium purple/grey placeholder text */
+      font-style: normal;
+      /* No italics */
+      opacity: 1;
+    }
+
+    #attributeList ul li input::-webkit-input-placeholder {
+      /* WebKit, Blink, Edge */
+      color: #8a85a0;
+      font-style: normal;
+      opacity: 1;
+    }
+
+    #attributeList ul li input::-moz-placeholder {
+      /* Firefox */
+      color: #8a85a0;
+      font-style: normal;
+      opacity: 1;
+    }
+
+    #attributeList ul li input:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: #8a85a0;
+      font-style: normal;
+      opacity: 1;
+    }
+
+    #attributeList ul li input::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: #8a85a0;
+      font-style: normal;
+      opacity: 1;
+    }
+
+
+    img[data-tenant-branding-background=true] {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      position: fixed;
+      left: 0;
+      overflow: hidden;
+      top: 0
+    }
+
+    div[data-tenant-branding-background-color=true] {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      z-index: -1;
+      background-color: inherit;
+      /* Use body background */
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      display: table;
+      min-height: 100vh;
+      /* Ensure container takes full height */
+      height: auto;
+      /* Allow shrinking */
+      padding: 20px 0;
+      /* Add some vertical padding */
+    }
+
+    /* Main content area where B2C injects API */
+    #api {
+      margin: 0 auto;
+      width: 90%;
+      /* Default width for smaller screens */
+      max-width: 600px;
+      /* Limit the maximum width for larger screens */
+      padding: 30px 40px;
+      /* Inner padding */
+      background-color: #ffffff;
+      /* Darker purple container background */
+      border-radius: 15px;
+      /* Rounded corners */
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow */
+    }
+
+    @media screen and (min-width: 768px) {
+      #api {
+        width: 70%;
       }
-  
-      @font-face {
-        font-family: 'SegoeUI';
-        src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui_bold.WOFF);
-        font-weight: bold;
+    }
+
+    @media screen and (min-width: 1024px) {
+      #api {
+        width: 50%;
       }
-  
-      /* IDP button styling (can be overridden below) */
-      #AmazonExchange {
-        background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/amazon.svg);
+    }
+
+    @media screen and (max-width: 600px) {
+      #api {
+        padding: 20px 25px;
+        /* Adjust padding for small screens */
+        max-width: 90%;
+        /* Allow more width */
+        border-radius: 10px !important;
+        /* Explicitly set border-radius */
       }
-      /* ... other IDP styles ... */
-      #LinkedInExchange {
-        background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/linkedin.svg);
+    }
+
+    /* Heading style */
+    .heading h1 {
+      margin-bottom: 25px;
+      color: #001163;
+      /* White color for heading */
+      font-size: 2.2em;
+      font-weight: 700;
+      /* Bold */
+      font-family: inherit;
+      /* Use body font */
+      text-align: center;
+      /* Center heading */
+    }
+
+    /* Center the content column */
+    .col-lg-6 {
+      max-width: none;
+      /* Override default max-width */
+      width: 100%;
+      float: none;
+      display: inline-block;
+      vertical-align: middle;
+      /* Center vertically */
+      padding: 0;
+      background-color: transparent;
+    }
+
+    .row {
+      width: 100%;
+      margin: 0;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    #simplemodal-container .simplemodal-data {
+      /* Keep for B2C compatibility if needed, adjust colors if necessary */
+      padding: 5px 8px;
+      overflow: hidden;
+      background-color: #4a456a;
+      /* Match input background */
+      border-radius: 3px;
+      font-style: italic;
+      color: #c0bcdc;
+    }
+
+    /* --- Button Styling --- */
+
+    /* General Button Reset/Base */
+    button {
+      font-family: inherit;
+      /* Use body font */
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1em;
+      height: 45px;
+      padding: 0 20px;
+      transition: all 0.2s ease-in-out;
+      box-sizing: border-box;
+      display: flex;
+      /* Use flex for icon alignment */
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Primary Button Style (e.g., Sign Up, Continue) */
+    .buttons button#continue,
+    .buttons button#next,
+    #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send],
+    /* Apply to verification send */
+    #attributeList ul li .attrEntry .verificationControlContent .sendCode {
+      background: linear-gradient(90deg, #013fe0, #001163);
+      /* Purple gradient */
+      color: #FFFFFF;
+      border: none;
+      width: 100%;
+      /* Full width */
+      margin-top: 20px;
+    }
+
+    .buttons button#continue:hover,
+    .buttons button#next:hover,
+    #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send]:hover,
+    #attributeList ul li .attrEntry .verificationControlContent .sendCode:hover {
+      background: linear-gradient(90deg, #0235b7, #000a3c);
+      /* Darker gradient on hover */
+      box-shadow: 0 4px 15px rgba(116, 77, 255, 0.3);
+      /* Add glow on hover */
+    }
+
+    /* Secondary/Outline Button Style (e.g., Cancel, Social Logins) */
+    .buttons #cancel,
+    .accountButton,
+    /* Class often used for social buttons */
+    #LocalAccountSigninEmailExchange,
+    /* Apply to specific B2C buttons */
+    #LocalAccountSigninUsernameExchange,
+    #SignInWithLogonEmailExchange,
+    #SignInWithLogonNameExchange,
+    #SignUpWithLogonEmailExchange,
+    #SignUpWithLogonNameExchange {
+      background-color: transparent;
+      border: 1px solid #6f6c8d;
+      /* Subtle purple/grey border */
+      color: #c0bcdc;
+      /* Light text color */
+      width: 100%;
+      margin-top: 10px;
+      /* Space between buttons */
+      padding: 0 15px;
+      /* Adjust padding */
+    }
+
+    /* Hover for Secondary/Outline */
+    .buttons #cancel:hover,
+    .accountButton:hover,
+    #LocalAccountSigninEmailExchange:hover,
+    #LocalAccountSigninUsernameExchange:hover,
+    #SignInWithLogonEmailExchange:hover,
+    #SignInWithLogonNameExchange:hover,
+    #SignUpWithLogonEmailExchange:hover,
+    #SignUpWithLogonNameExchange:hover {
+      background-color: rgba(111, 108, 141, 0.15);
+      /* Slight background tint */
+      border-color: #001163;
+      /* Brighter border */
+      color: #FFFFFF;
+      /* White text */
+    }
+
+    /* Adjust Social Button Icons/Text Alignment */
+    .accountButton img,
+    .accountButton i,
+    .accountButton svg {
+      margin-right: 10px;
+      height: 18px;
+      /* Adjust icon size */
+      width: auto;
+      filter: grayscale(50%) opacity(0.8);
+      /* Subdue default color icons slightly */
+    }
+
+    .accountButton:hover img,
+    .accountButton:hover i,
+    .accountButton:hover svg {
+      filter: none;
+      /* Restore color on hover */
+    }
+
+    /* Specific overrides for B2C default buttons if needed */
+    #LocalAccountSigninEmailExchange,
+    #LocalAccountSigninUsernameExchange,
+    #SignInWithLogonEmailExchange,
+    #SignInWithLogonNameExchange,
+    #SignUpWithLogonEmailExchange,
+    #SignUpWithLogonNameExchange {
+      background-size: 18px;
+      /* Adjust default icon size */
+      background-position: 15px center;
+      /* Adjust icon position */
+      padding-left: 45px;
+      /* Make space for icon */
+      justify-content: flex-start;
+      /* Align text left */
+    }
+
+
+    /* Remove specific hover background colors from original B2C template */
+    #AmazonExchange:hover,
+    #FacebookExchange:hover,
+    #GitHubExchange:hover,
+    #AppleExchange:hover,
+    #AppleManagedExchange:hover,
+    #GoogleExchange:hover,
+    #LinkedInExchange:hover,
+    #MicrosoftAccountExchange:hover,
+    #QQExchange:hover,
+    #TwitterExchange:hover,
+    #WeChatExchange:hover,
+    #WeiboExchange:hover {
+      background-color: transparent !important;
+      /* Use the standard outline hover */
+    }
+
+    .buttons button[aria-disabled=true] {
+      opacity: 0.5;
+      pointer-events: none;
+      /* Prevent clicks */
+      background: #4a456a;
+      /* Use a disabled background */
+    }
+
+    .buttons button:not([aria-disabled=true]) {
+      opacity: 1
+    }
+
+    /* Cancel button specific positioning (if used) */
+    .buttons #cancel {
+      /* Use standard outline style above, remove absolute positioning */
+      width: auto;
+      /* Allow shrink-wrapping */
+      position: static;
+      margin: 15px auto 0;
+      /* Center below primary button */
+      display: inline-block;
+      /* Allow centering */
+      padding: 0 30px;
+      /* More padding */
+    }
+
+    .buttons #cancel:before {
+      /* Hide default arrow */
+      display: none;
+    }
+
+
+    /* --- Form Element Styling --- */
+
+    #attributeList ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    #attributeList ul li {
+      list-style: none;
+      margin: 1.2rem 0;
+      /* Vertical spacing between fields */
+      text-align: left;
+    }
+
+    label,
+    #attributeList ul li label {
+      font-weight: 600;
+      display: block;
+      text-align: left;
+      float: none;
+      color: #001163;
+      margin-bottom: 8px;
+      font-size: 0.95em;
+      font-family: inherit;
+    }
+
+    /* Ensure default labels are shown */
+    #attributeList ul li.EmailBox label,
+    #attributeList ul li.Password label,
+    #attributeList ul li.TextBox label {
+      display: block !important;
+    }
+
+    /* Hide specific B2C labels if needed */
+    #attributeList ul li label[for=country],
+    #attributeList ul li label[for=cpiminternal_legalCountry],
+    #attributeList ul li label[for=cpiminternal_dateOfBirth] {
+      /* Keep original styles if layout requires them */
+      /* Example: display: inline-block !important; */
+    }
+
+    /* Validation Error Style */
+    #attributeList ul li .attrEntry.validate input.invalid,
+    #attributeList ul li .attrEntry.validate input:invalid {
+      border: 1px solid #ff6b6b;
+      /* Red border for invalid */
+      background-color: rgba(255, 107, 107, 0.1);
+      /* Slight red background */
+    }
+
+    /* Add item level error display styling */
+    #attributeList ul li .attrEntry .itemLevel {
+      color: #ff6b6b;
+      /* Red error text */
+      font-size: 0.85em;
+      margin-top: 5px;
+      display: block;
+      /* Ensure visible */
+    }
+
+
+    /* --- Verification Control Styling --- */
+    #attributeList ul li .attrEntry .verify {
+      margin-top: 1rem;
+      padding-bottom: 10px;
+      position: relative
+    }
+
+    #attributeList ul li .attrEntry .verificationControlContent .buttons {
+      margin-top: 1rem;
+      padding-bottom: 10px;
+      position: relative
+    }
+
+    /* Verification Buttons - use secondary style for verify/resend/edit */
+    #attributeList ul li .attrEntry .verify .verifyButton,
+    #attributeList ul li .attrEntry .verificationControlContent .verifyCode,
+    #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend],
+    #attributeList ul li .attrEntry .verificationControlContent .sendNewCode,
+    #attributeList ul li .attrEntry .verify .editButton,
+    #attributeList ul li .attrEntry .verificationControlContent .changeClaims {
+      background-color: transparent;
+      border: 1px solid #6f6c8d;
+      color: #c0bcdc;
+      width: auto;
+      /* Allow shrink */
+      height: 40px;
+      /* Smaller height */
+      font-size: 0.9em;
+      margin-top: 10px;
+      margin-right: 5px;
+      /* Space between buttons if inline */
+    }
+
+    #attributeList ul li .attrEntry .verify .verifyButton:hover,
+    #attributeList ul li .attrEntry .verificationControlContent .verifyCode:hover,
+    #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend]:hover,
+    #attributeList ul li .attrEntry .verificationControlContent .sendNewCode:hover,
+    #attributeList ul li .attrEntry .verify .editButton:hover,
+    #attributeList ul li .attrEntry .verificationControlContent .changeClaims:hover {
+      background-color: rgba(111, 108, 141, 0.15);
+      border-color: #001163;
+      color: #FFFFFF;
+    }
+
+    /* Keep Send button using primary style */
+    /* #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send],
+        #attributeList ul li .attrEntry .verificationControlContent .sendCode { ... primary style applied above ... } */
+
+    @media screen and (-ms-high-contrast:active) {
+
+      /* High contrast adjustments - keep for accessibility */
+      #attributeList ul li .attrEntry .verify button,
+      .buttons #continue,
+      .accountButton {
+        border: 1px dashed #fff !important
       }
-      #LinkedInExchange:hover {
-         background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/linkedin.svg); /* Keep B2C default hover icon */
+
+      #attributeList ul li .attrEntry .verify button:hover,
+      .buttons #continue:hover,
+      .accountButton:hover {
+        border: 1px solid #fff !important
       }
-  
-      .buttons #cancel:before {
-        content: url(https://login.microsoftonline.com/templates/src/images/left-arrow.svg);
+    }
+
+    #attributeList ul li .attrEntry .verify #email_ver_input_label {
+      display: none !important
+        /* Keep if B2C hides this */
+    }
+
+    /* Working indicator */
+    #api .working {
+      background: url(data:image/gif;base64,R0lGODlhbgAKAPMAALy6vNze3PTy9MTCxOTm5Pz6/Ly+vNTS1Pz+/Ozq7MzKzP///wAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJCQAJACwTAAIABgAGAAAEE7AcM0iaIAuaQRidR4RIIgREGQEAIfkECQkACQAsJwACAAYABgAABBOwHDNImiALmkEYnUeESCIERBkBACH5BAkJAAkALDYAAgAGAAYAAAQTsBwzSJogC5pBGJ1HhEgiBEQZAQAh+QQJCQAJACxFAAIABgAGAAAEE7AcM0iaIAuaQRidR4RIIgREGQEAIfkECQkACgAsCwACAEAABgAABDdQpWFOUTjrzbv/HkFZAmACB6iuLFeeR3CabW138izOd3/vJwTFRPAZWUIDUUIICI5QFSLgVEQAACH5BAkJAAoALB8AAgAtAAYAAAQyUKVhTlE46837LkdFSEAJHF6qcqEpBGa5zmp8Ejatc0ZfEgjKb0fE4FwSQkBQbL6AiggAIfkECQkACgAsOAACABUABgAABCpQpWFOUTjnciqRQAgcWtmJQiCGpbaOxNtmRh0SCHXPWIxKhICAtxEiFBEAIfkECQkACgAsPQACABAABgAABCdQpWFOURgTagX4wJFJBngE4Dei6ZauqYFQHzHOZSgRgTBiiEBPEQEAIfkECQkACwAsAwACAEsABgAABEVwpWFOWTjrzbv/XnFUxCaSEqACB+i+cDeugjarQrCqce97O5bGsAsQgr9kkkgbFhEUnHIaOzYzVimCYKR6XzkCghMeRwAAIfkECQkACwAsJgACACkABgAABDxwpWFOWTjrrcupxOaBEmACB6dy3ylorSkEp7neWI1qRh0QOtyt5+L5EBSZcAUsZppKBOG3vM0ICM41GwEAIfkECQkACgAsMAACAB8ABgAABDdQpWFOUThrQq2WXSEAJHB8m1Ge2bgGJYlmcJzGnD2DOpaXCAqJsOMNNUGVSUIICIoYRMCJklIjACH5BAkJAAsALDUAAgAbAAYAAAQ3cKVhTlkYl1NJ1tyQSEAJHN8SlsK3AkJglul8fsYcEHadszgdggJ0/URG0wVB2KVABMQzFpBGAAAh+QQJCQALACwPAAIAQgAGAAAEU3ClYU5ZOOvNOyeUtRVHRYzlkEhACxxeLH+GC2tpK+AuIAQ9w2woA/Y2wYCmZgMdidCN04Vk+pY9AoKii3oxW+aJ50KQuwhCYPf9ptedn/YTgEcAACH5BAkJAAsALB4AAgAzAAYAAARMcKVhTlk4663LqQQ3VZdGUJYArMDBvdzHCp3Bupl6B+wK/5heyyQk9k494M82M7KcKwRlFVK+kNFaMzcdIggBmhUmCCNEYHEnEF5EAAAh+QQJCQALACwoAAIAKgAGAAAER3ClYU5ZOGtCrZZHRXxFOCQgoB7fZqgA68LCrAoBrLZZrn+6mOYFC3B+PEkQSBRmmjEE5ZZMUW0n7AVBMFYxXG8LR0CMjeYIACH5BAkJAAsALC4AAgApAAYAAARHsBwzyLo4DVrwlZTljRo3AajgCRR6jGc6Zi0Qu16A7uOOzwudb7MTXQjDns9IGiJ3iBXR1oQCFyCZIECIkriq2bZ7/RC4iwgAIfkECQkACwAsLgACADMABgAABExwpWFOWRiXU0nOU3V9ZAlSlgCswEFyrPCprGvemlEH7Er2rQ+vh8MNd8SPLiYEFm8EIIKy8jSZJ+yTNF16EISArCQQI8jh8RYtXkQAACH5BAkJAAsALC8AAgA/AAYAAAROsBwzyLo4DVrwlZTljWRpZtsErIInUOsxquxp3x+sA4EXrMARMIYrln5DoOhCSAqHS6O0yRoiXJsaFniVekGAhSBA6LrILdK47G2LCYEIACH5BAkJAAoALDAAAgAfAAYAAAQ6sBwziLo4DVqwz9shASQgeAJFHh+qAlMJe4EMtKAtW3mJXwRbsIRwqXg4xGalEAQIxQ/iefpdpk9FBAAh+QQJCQALACwwAAIAKQAGAAAEPnClYU5ZGJdTSf5gqFGWAJzAAXKoIL6ZiR4BeoJ2CsO1TeQ4Q2v3+tkQlJPnYzwhiKLNEEEIuEIC6xMarboiACH5BAkJAAoALDEAAgA3AAYAAARCsBwziLo4DVqw/2AoKsR2SEAKCJ5Apccoz9kLTOrtBTlA/yJeL2ep5YDIXa+kQrQ2sKQUAdUJAgTnB4FlSacErCICACH5BAkJAAsALDIAAgAVAAYAAAQpsBwzyLo4S5rWBKCQjV9IgUAwZicYDGi6Ym1KxMh83WixCAFCTrcL+iIAIfkECQkACgAsMgACAB8ABgAABC5QpWFOUTjrrcuphASMwMGd3EcKATmiMOaWxBzDRj4SCLXfqNpKQggIgDAWTxEBACH5BAkJAAsALDMAAgAtAAYAAAQysBwzyLo46823pMkyAaTQneg2lhQJBGmMtmQwuK+sb/RL4Iid8PJzFRaCACE4HCaXiwgAIfkECQkACgAsOAACAAYABgAABBNQpWFOESCDE3QmnoFQn0QEghIBACH5BAkJAAoALEIAAgAGAAYAAAQTUKVhThEggxN0Jp6BUJ9EBIISAQAh+QQJCQAKACxRAAIABgAGAAAEE1ClYU4RIIMTdCaegVCfRASCEgEAOw==) no-repeat;
+      height: 30px;
+      width: auto;
+      background-position: center bottom;
+      filter: hue-rotate(200deg) brightness(1.5);
+      /* Adjust color to match theme */
+    }
+
+    /* --- Dropdown/Select Styling --- */
+    #attributeList ul li .attrEntry .dropdown_single,
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
+      height: 45px;
+      width: 100%;
+      border-radius: 8px;
+      background-color: #ffffff;
+      /* Match input background */
+      border: 1px solid #001163;
+      /* Match input border */
+      color: #6f6c8d;
+      /* White text */
+      padding-left: 15px;
+      padding-right: 35px;
+      /* Make space for arrow */
+      font-size: 1em;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;utf8,&lt;svg fill="%23c0bcdc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">&lt;path d="M7 10l5 5 5-5z"/>&lt;path d="M0 0h24v24H0z" fill="none"/>&lt;/svg>');
+      /* Light purple arrow */
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 20px;
+      margin-top: 8px;
+      /* Space below label */
+      font-family: inherit;
+      /* Use body font */
+    }
+
+    /* Date Input Alignment */
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+      /* Space between date selects */
+    }
+
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
+      flex-grow: 1;
+      flex-basis: 0;
+      /* Allow equal distribution initially */
+      /* Use base select styles defined above */
+      height: 45px;
+      padding-left: 15px;
+    }
+
+    /* Adjust flex-basis for specific date parts if needed */
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_day.day {
+      flex-basis: 70px;
+      flex-grow: 0.5;
+    }
+
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_month.month {
+      flex-grow: 1.2;
+    }
+
+    #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_year.year {
+      flex-grow: 1;
+    }
+
+
+    #attributeList ul li .helpLink {
+      display: none;
+      /* Keep hidden unless needed */
+    }
+
+    #attributeVerification .buttons {
+      margin-top: 20px;
+      /* Reduce space */
+    }
+
+    /* --- File Input Styling --- */
+    #attributeList ul li.Attribute.Complex.FileUpload {
+      background-color: #4a456a;
+      /* Match input */
+      border: 1px solid #6f6c8d;
+      border-radius: 8px;
+      padding: 0 0 0 15px;
+      /* Padding left, control height with button/text */
+      display: flex;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      color: #8a85a0;
+      /* Color for "No file chosen" */
+      height: 45px;
+      margin-top: 8px;
+      overflow: hidden;
+      /* Hide native input parts */
+      font-family: inherit;
+    }
+
+    /* Style the proxy button */
+    #attributeList ul li input[type="file"]::file-selector-button {
+      background: linear-gradient(90deg, #013fe0, #001163);
+      /* Gradient */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0 15px;
+      margin-right: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: inherit;
+      height: 30px;
+      /* Button height within container */
+      transition: background 0.2s ease-in-out;
+    }
+
+    #attributeList ul li input[type="file"]::file-selector-button:hover {
+      background: linear-gradient(90deg, #013fe0, #001163);
+      /* Darker gradient */
+    }
+
+    /* Style the file input text ('No file chosen') */
+    #attributeList ul li input[type="file"] {
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      width: auto;
+      color: #8a85a0;
+      font-style: normal;
+      flex-grow: 1;
+      font-size: 0.9em;
+      height: 100%;
+      /* Fill container height */
+      line-height: 43px;
+      /* Align text vertically */
+    }
+
+
+    /* --- "or" Separator Styling --- */
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #6f6c8d;
+      /* Match border color */
+      margin: 25px 0;
+      font-family: inherit;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .divider hr,
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid #4a456a;
+      /* Use a darker line color */
+      margin: 0 0.75em;
+    }
+
+    .divider span {
+      /* If B2C uses a span */
+      padding: 0 0.5em;
+    }
+
+
+    /* --- Responsive Adjustments --- */
+    @media screen and (max-width:600px) {
+      #api {
+        padding: 20px 25px;
+        /* Reduce padding */
+        max-width: 90%;
+        /* Allow more width */
       }
-    </style>
-    <style id="idpselector">
-      /* Base styles kept for B2C compatibility */
-      #SignInWithLogonNameExchange,
-      #SignUpWithLogonEmailExchange,
-      #SignUpWithLogonNameExchange {
-        background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/local.svg);
+
+      .heading h1 {
+        font-size: 1.8em;
+        /* Smaller heading */
       }
-      #SignInWithLogonNameExchange:hover,
-      #SignUpWithLogonEmailExchange:hover,
-      #SignUpWithLogonNameExchange:hover {
-        background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/local.svg);
-      }
-      #SignUpWithLogonEmailExchange.text-link {
-        background-image: none;
-        background-color: transparent !important;
-      }
-      #SignUpWithLogonEmailExchange.text-link:hover {
-        background-image: none;
-        background-color: transparent !important;
-      }
-    </style>
-  
-    <style>
-      /* Following are generated styles via gulp. */
-      /* inject: css */
-      html {
-        background: 0 0
-      }
-  
-      body {
-          /* Use a dark background similar to the image */
-          background-color: #2a254a; /* Dark blue/purple */
-          /* Use a clean Sans-Serif font */
-          font-family: 'Nunito', sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
-          color: #001163; /* Default light text color (light purple/grey) */
-          background-attachment: fixed;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          text-align: left;
-      }
-  
-      p {
-        margin: 0;
-        color: #001163; /* Ensure paragraphs use the default light text color */
-      }
-  
-      a {
-         color: #013fe0; /* Brighter purple for links */
-         text-decoration: none;
-      }
-      a:hover {
-          color: #001163;
-          text-decoration: underline;
-      }
-      a:focus {
-        outline: 0
-      }
-  
-      /* Input and Select base - remove default borders */
-      input,
-      select {
-        border: none;
-      }
-  
-  
-      /* Style text, email, and password inputs */
+
       #attributeList ul li input[type="text"],
       #attributeList ul li input[type="email"],
-      #attributeList ul li input[type="password"] {
-          height: 45px; /* Slightly smaller height */
-          width: 100%;
-          border-radius: 8px;
-          background-color: #ffffff; /* Slightly lighter purple background */
-          border: 1px solid #001163; /* Subtle purple/grey border */
-          color: #001163; /* White text color when typing */
-          padding: 0 15px; /* Horizontal padding */
-          font-size: 1em;
-          box-sizing: border-box;
-          text-indent: 0;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-          margin-top: 8px; /* Space below label */
-          font-family: inherit; /* Use body font */
+      #attributeList ul li input[type="password"],
+      #attributeList ul li .attrEntry .dropdown_single,
+      #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select,
+      #attributeList ul li.Attribute.Complex.FileUpload {
+        height: 42px;
+        /* Slightly smaller */
       }
-  
-      /* Style placeholders specifically */
-      #attributeList ul li input::placeholder { /* Standard */
-          color: #013fe0; /* Medium purple/grey placeholder text */
-          font-style: normal; /* No italics */
-          opacity: 1;
+
+      #attributeList ul li input[type="file"]::file-selector-button {
+        height: 28px;
+        padding: 0 10px;
+        font-size: 0.9em;
       }
-      #attributeList ul li input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-          color: #8a85a0;
-          font-style: normal;
-          opacity: 1;
+
+      #attributeList ul li input[type="file"] {
+        line-height: 40px;
       }
-      #attributeList ul li input::-moz-placeholder { /* Firefox */
-          color: #8a85a0;
-          font-style: normal;
-          opacity: 1;
-      }
-      #attributeList ul li input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-          color: #8a85a0;
-          font-style: normal;
-          opacity: 1;
-      }
-      #attributeList ul li input::-ms-input-placeholder { /* Microsoft Edge */
-          color: #8a85a0;
-          font-style: normal;
-          opacity: 1;
-      }
-  
-  
-      img[data-tenant-branding-background=true] {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
-        position: fixed;
-        left: 0;
-        overflow: hidden;
-        top: 0
-      }
-  
-      div[data-tenant-branding-background-color=true] {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        z-index: -1;
-        background-color: inherit; /* Use body background */
-      }
-  
-      .container {
-        text-align: center;
-        width: 100%;
-        display: table;
-        min-height: 100vh; /* Ensure container takes full height */
-        height: auto; /* Allow shrinking */
-        padding: 20px 0; /* Add some vertical padding */
-      }
-  
-       /* Main content area where B2C injects API */
-       #api {
-        margin: 0 auto;
-        width: 90%; /* Default width for smaller screens */
-        max-width: 600px; /* Limit the maximum width for larger screens */
-        padding: 30px 40px; /* Inner padding */
-        background-color: #ffffff; /* Darker purple container background */
-        border-radius: 15px; /* Rounded corners */
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      }
-      
-      @media screen and (min-width: 768px) {
-        #api {
-          width: 70%;
-        }
-      }
-      
-      @media screen and (min-width: 1024px) {
-        #api {
-          width: 50%;
-        }
-      }
-      @media screen and (max-width: 600px) {
-        #api {
-          padding: 20px 25px; /* Adjust padding for small screens */
-          max-width: 90%; /* Allow more width */
-          border-radius: 10px !important; /* Explicitly set border-radius */
-        }
-      }
-       /* Heading style */
-      .heading h1 {
-          margin-bottom: 25px;
-          color: #001163; /* White color for heading */
-          font-size: 2.2em;
-          font-weight: 700; /* Bold */
-          font-family: inherit; /* Use body font */
-          text-align: center; /* Center heading */
-      }
-  
-       /* Center the content column */
-      .col-lg-6 {
-        max-width: none; /* Override default max-width */
-        width: 100%;
-        float: none;
-        display: inline-block;
-        vertical-align: middle; /* Center vertically */
-        padding: 0;
-        background-color: transparent;
-      }
-  
-      .row {
-        width: 100%;
-        margin: 0;
-        display: table-cell;
-        vertical-align: middle;
-      }
-  
-      ul {
-        padding: 0;
-        margin: 0;
-      }
-  
-      #simplemodal-container .simplemodal-data {
-         /* Keep for B2C compatibility if needed, adjust colors if necessary */
-        padding: 5px 8px;
-        overflow: hidden;
-        background-color: #4a456a; /* Match input background */
-        border-radius: 3px;
-        font-style: italic;
-        color: #c0bcdc;
-      }
-  
-      /* --- Button Styling --- */
-  
-      /* General Button Reset/Base */
-      button {
-          font-family: inherit; /* Use body font */
-          cursor: pointer;
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 1em;
-          height: 45px;
-          padding: 0 20px;
-          transition: all 0.2s ease-in-out;
-          box-sizing: border-box;
-          display: flex; /* Use flex for icon alignment */
-          align-items: center;
-          justify-content: center;
-      }
-  
-      /* Primary Button Style (e.g., Sign Up, Continue) */
+
+      button,
       .buttons button#continue,
       .buttons button#next,
-      #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send], /* Apply to verification send */
-      #attributeList ul li .attrEntry .verificationControlContent .sendCode {
-          background: linear-gradient(90deg, #013fe0, #001163); /* Purple gradient */
-          color: #FFFFFF;
-          border: none;
-          width: 100%; /* Full width */
-          margin-top: 20px;
+      .accountButton {
+        height: 42px;
+        /* Smaller buttons */
+        font-size: 0.95em;
       }
-      .buttons button#continue:hover,
-      .buttons button#next:hover,
-      #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send]:hover,
-      #attributeList ul li .attrEntry .verificationControlContent .sendCode:hover {
-          background: linear-gradient(90deg, #0235b7, #000a3c); /* Darker gradient on hover */
-          box-shadow: 0 4px 15px rgba(116, 77, 255, 0.3); /* Add glow on hover */
-      }
-  
-      /* Secondary/Outline Button Style (e.g., Cancel, Social Logins) */
-      .buttons #cancel,
-      .accountButton, /* Class often used for social buttons */
-      #LocalAccountSigninEmailExchange, /* Apply to specific B2C buttons */
-      #LocalAccountSigninUsernameExchange,
-      #SignInWithLogonEmailExchange,
-      #SignInWithLogonNameExchange,
-      #SignUpWithLogonEmailExchange,
-      #SignUpWithLogonNameExchange {
-          background-color: transparent;
-          border: 1px solid #6f6c8d; /* Subtle purple/grey border */
-          color: #c0bcdc; /* Light text color */
-          width: 100%;
-          margin-top: 10px; /* Space between buttons */
-           padding: 0 15px; /* Adjust padding */
-      }
-       /* Hover for Secondary/Outline */
-      .buttons #cancel:hover,
-      .accountButton:hover,
-      #LocalAccountSigninEmailExchange:hover,
-      #LocalAccountSigninUsernameExchange:hover,
-      #SignInWithLogonEmailExchange:hover,
-      #SignInWithLogonNameExchange:hover,
-      #SignUpWithLogonEmailExchange:hover,
-      #SignUpWithLogonNameExchange:hover {
-        background-color: rgba(111, 108, 141, 0.15); /* Slight background tint */
-        border-color: #001163; /* Brighter border */
-        color: #FFFFFF; /* White text */
-      }
-  
-      /* Adjust Social Button Icons/Text Alignment */
-       .accountButton img,
-       .accountButton i,
-       .accountButton svg {
-           margin-right: 10px;
-           height: 18px; /* Adjust icon size */
-           width: auto;
-           filter: grayscale(50%) opacity(0.8); /* Subdue default color icons slightly */
-       }
-       .accountButton:hover img,
-       .accountButton:hover i,
-       .accountButton:hover svg {
-          filter: none; /* Restore color on hover */
-       }
-       /* Specific overrides for B2C default buttons if needed */
-        #LocalAccountSigninEmailExchange,
-        #LocalAccountSigninUsernameExchange,
-        #SignInWithLogonEmailExchange,
-        #SignInWithLogonNameExchange,
-        #SignUpWithLogonEmailExchange,
-        #SignUpWithLogonNameExchange {
-           background-size: 18px; /* Adjust default icon size */
-           background-position: 15px center; /* Adjust icon position */
-           padding-left: 45px; /* Make space for icon */
-           justify-content: flex-start; /* Align text left */
-        }
-  
-  
-       /* Remove specific hover background colors from original B2C template */
-      #AmazonExchange:hover, #FacebookExchange:hover, #GitHubExchange:hover, #AppleExchange:hover, #AppleManagedExchange:hover, #GoogleExchange:hover, #LinkedInExchange:hover, #MicrosoftAccountExchange:hover, #QQExchange:hover, #TwitterExchange:hover, #WeChatExchange:hover, #WeiboExchange:hover {
-        background-color: transparent !important; /* Use the standard outline hover */
-      }
-  
-      .buttons button[aria-disabled=true] {
-        opacity: 0.5;
-         pointer-events: none; /* Prevent clicks */
-          background: #4a456a; /* Use a disabled background */
-      }
-  
-      .buttons button:not([aria-disabled=true]) {
-        opacity: 1
-      }
-  
-       /* Cancel button specific positioning (if used) */
-      .buttons #cancel {
-         /* Use standard outline style above, remove absolute positioning */
-         width: auto; /* Allow shrink-wrapping */
-         position: static;
-         margin: 15px auto 0; /* Center below primary button */
-         display: inline-block; /* Allow centering */
-         padding: 0 30px; /* More padding */
-      }
-      .buttons #cancel:before {
-         /* Hide default arrow */
-         display: none;
-      }
-  
-  
-      /* --- Form Element Styling --- */
-  
-      #attributeList ul {
-        padding: 0;
-        margin: 0;
-      }
-  
-      #attributeList ul li {
-        list-style: none;
-        margin: 1.2rem 0; /* Vertical spacing between fields */
-        text-align: left;
-      }
-  
-      label,
-      #attributeList ul li label {
-          font-weight: 600;
-          display: block;
-          text-align: left;
-          float: none;
-          color: #001163;
-          margin-bottom: 8px;
-          font-size: 0.95em;
-          font-family: inherit;
-      }
-  
-      /* Ensure default labels are shown */
-      #attributeList ul li.EmailBox label,
-      #attributeList ul li.Password label,
-      #attributeList ul li.TextBox label {
-         display: block !important;
-      }
-      /* Hide specific B2C labels if needed */
-       #attributeList ul li label[for=country],
-       #attributeList ul li label[for=cpiminternal_legalCountry],
-       #attributeList ul li label[for=cpiminternal_dateOfBirth] {
-         /* Keep original styles if layout requires them */
-         /* Example: display: inline-block !important; */
-       }
-  
-       /* Validation Error Style */
-      #attributeList ul li .attrEntry.validate input.invalid,
-      #attributeList ul li .attrEntry.validate input:invalid {
-        border: 1px solid #ff6b6b; /* Red border for invalid */
-         background-color: rgba(255, 107, 107, 0.1); /* Slight red background */
-      }
-       /* Add item level error display styling */
-       #attributeList ul li .attrEntry .itemLevel {
-           color: #ff6b6b; /* Red error text */
-           font-size: 0.85em;
-           margin-top: 5px;
-           display: block; /* Ensure visible */
-       }
-  
-  
-       /* --- Verification Control Styling --- */
-      #attributeList ul li .attrEntry .verify {
-        margin-top: 1rem;
-        padding-bottom: 10px;
-        position: relative
-      }
-      #attributeList ul li .attrEntry .verificationControlContent .buttons {
-        margin-top: 1rem;
-        padding-bottom: 10px;
-        position: relative
-      }
-  
-      /* Verification Buttons - use secondary style for verify/resend/edit */
-      #attributeList ul li .attrEntry .verify .verifyButton,
-      #attributeList ul li .attrEntry .verificationControlContent .verifyCode,
-      #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend],
-      #attributeList ul li .attrEntry .verificationControlContent .sendNewCode,
-      #attributeList ul li .attrEntry .verify .editButton,
-      #attributeList ul li .attrEntry .verificationControlContent .changeClaims {
-          background-color: transparent;
-          border: 1px solid #6f6c8d;
-          color: #c0bcdc;
-          width: auto; /* Allow shrink */
-          height: 40px; /* Smaller height */
-          font-size: 0.9em;
-          margin-top: 10px;
-          margin-right: 5px; /* Space between buttons if inline */
-      }
-       #attributeList ul li .attrEntry .verify .verifyButton:hover,
-       #attributeList ul li .attrEntry .verificationControlContent .verifyCode:hover,
-       #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend]:hover,
-       #attributeList ul li .attrEntry .verificationControlContent .sendNewCode:hover,
-       #attributeList ul li .attrEntry .verify .editButton:hover,
-       #attributeList ul li .attrEntry .verificationControlContent .changeClaims:hover {
-           background-color: rgba(111, 108, 141, 0.15);
-           border-color: #001163;
-           color: #FFFFFF;
-       }
-        /* Keep Send button using primary style */
-        /* #attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send],
-        #attributeList ul li .attrEntry .verificationControlContent .sendCode { ... primary style applied above ... } */
-  
-      @media screen and (-ms-high-contrast:active) {
-        /* High contrast adjustments - keep for accessibility */
-        #attributeList ul li .attrEntry .verify button,
-        .buttons #continue, .accountButton {
-          border: 1px dashed #fff !important
-        }
-        #attributeList ul li .attrEntry .verify button:hover,
-        .buttons #continue:hover, .accountButton:hover {
-          border: 1px solid #fff !important
-        }
-      }
-  
-      #attributeList ul li .attrEntry .verify #email_ver_input_label {
-        display: none !important /* Keep if B2C hides this */
-      }
-  
-      /* Working indicator */
-      #api .working {
-        background: url(data:image/gif;base64,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) no-repeat;
-        height: 30px;
-        width: auto;
-        background-position: center bottom;
-         filter: hue-rotate(200deg) brightness(1.5); /* Adjust color to match theme */
-      }
-  
-      /* --- Dropdown/Select Styling --- */
-      #attributeList ul li .attrEntry .dropdown_single,
-      #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
-          height: 45px;
-          width: 100%;
-          border-radius: 8px;
-          background-color: #ffffff; /* Match input background */
-          border: 1px solid #001163; /* Match input border */
-          color: #6f6c8d; /* White text */
-          padding-left: 15px;
-          padding-right: 35px; /* Make space for arrow */
-          font-size: 1em;
-          box-sizing: border-box;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-          background-image: url('data:image/svg+xml;utf8,&lt;svg fill="%23c0bcdc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">&lt;path d="M7 10l5 5 5-5z"/>&lt;path d="M0 0h24v24H0z" fill="none"/>&lt;/svg>'); /* Light purple arrow */
-          background-repeat: no-repeat;
-          background-position: right 10px center;
-          background-size: 20px;
-          margin-top: 8px; /* Space below label */
-          font-family: inherit; /* Use body font */
-      }
-  
-      /* Date Input Alignment */
+
       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date {
-        display: flex;
-        width: 100%;
-        gap: 10px; /* Space between date selects */
+        flex-direction: column;
+        /* Stack date fields */
+        gap: 8px;
       }
+
       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
-         flex-grow: 1;
-         flex-basis: 0; /* Allow equal distribution initially */
-          /* Use base select styles defined above */
-          height: 45px;
-          padding-left: 15px;
+        width: 100% !important;
+        flex-basis: auto !important;
       }
-      /* Adjust flex-basis for specific date parts if needed */
-       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_day.day { flex-basis: 70px; flex-grow: 0.5; }
-       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_month.month { flex-grow: 1.2; }
-       #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_year.year { flex-grow: 1; }
-  
-  
-      #attributeList ul li .helpLink {
-        display: none; /* Keep hidden unless needed */
-      }
-  
-      #attributeVerification .buttons {
-        margin-top: 20px; /* Reduce space */
-      }
-  
-      /* --- File Input Styling --- */
-      #attributeList ul li.Attribute.Complex.FileUpload {
-           background-color: #4a456a; /* Match input */
-           border: 1px solid #6f6c8d;
-           border-radius: 8px;
-           padding: 0 0 0 15px; /* Padding left, control height with button/text */
-           display: flex;
-           align-items: center;
-           width: 100%;
-           box-sizing: border-box;
-           color: #8a85a0; /* Color for "No file chosen" */
-           height: 45px;
-           margin-top: 8px;
-           overflow: hidden; /* Hide native input parts */
-           font-family: inherit;
-      }
-       /* Style the proxy button */
-       #attributeList ul li input[type="file"]::file-selector-button {
-          background: linear-gradient(90deg, #013fe0, #001163); /* Gradient */
-          color: white;
-          border: none;
-          border-radius: 5px;
-          padding: 0 15px;
-          margin-right: 10px;
-          cursor: pointer;
-          font-weight: 600;
-          font-family: inherit;
-          height: 30px; /* Button height within container */
-          transition: background 0.2s ease-in-out;
-       }
-        #attributeList ul li input[type="file"]::file-selector-button:hover {
-           background: linear-gradient(90deg, #013fe0, #001163); /* Darker gradient */
-        }
-        /* Style the file input text ('No file chosen') */
-        #attributeList ul li input[type="file"] {
-            border: none;
-            background: transparent;
-            padding: 0;
-            margin: 0;
-            width: auto;
-            color: #8a85a0;
-            font-style: normal;
-            flex-grow: 1;
-            font-size: 0.9em;
-            height: 100%; /* Fill container height */
-            line-height: 43px; /* Align text vertically */
-        }
-  
-  
-      /* --- "or" Separator Styling --- */
-       .divider {
-           display: flex;
-           align-items: center;
-           text-align: center;
-           color: #6f6c8d; /* Match border color */
-           margin: 25px 0;
-           font-family: inherit;
-           font-size: 0.9em;
-           text-transform: uppercase;
-           font-weight: 600;
-       }
-       .divider hr,
-       .divider::before,
-       .divider::after {
-           content: '';
-           flex: 1;
-           border: none;
-           border-bottom: 1px solid #4a456a; /* Use a darker line color */
-           margin: 0 0.75em;
-       }
-       .divider span { /* If B2C uses a span */
-          padding: 0 0.5em;
-       }
-  
-  
-      /* --- Responsive Adjustments --- */
-      @media screen and (max-width:600px) {
-        #api {
-            padding: 20px 25px; /* Reduce padding */
-            max-width: 90%; /* Allow more width */
-        }
-        .heading h1 {
-           font-size: 1.8em; /* Smaller heading */
-        }
-         #attributeList ul li input[type="text"],
-         #attributeList ul li input[type="email"],
-         #attributeList ul li input[type="password"],
-         #attributeList ul li .attrEntry .dropdown_single,
-         #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select,
-         #attributeList ul li.Attribute.Complex.FileUpload {
-            height: 42px; /* Slightly smaller */
-         }
-          #attributeList ul li input[type="file"]::file-selector-button {
-             height: 28px;
-             padding: 0 10px;
-             font-size: 0.9em;
-          }
-         #attributeList ul li input[type="file"] { line-height: 40px; }
-  
-         button, .buttons button#continue, .buttons button#next, .accountButton {
-             height: 42px; /* Smaller buttons */
-             font-size: 0.95em;
-         }
-         #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date {
-             flex-direction: column; /* Stack date fields */
-             gap: 8px;
-         }
-         #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select {
-              width: 100% !important;
-              flex-basis: auto !important;
-         }
-      }
-  
-      /* Keep original B2C responsive overrides if needed for specific flows */
-      @media screen and (max-width:100%) {
-         /* ... Review and retain necessary B2C styles ... */
-      }
-  
-      .panel, .panel_layout, .panel_layout_row { height: auto; } /* Prevent fixed heights */
-      body { min-height: 100vh; } /* Ensure body covers viewport */
-  
-  
-      @media only screen and (max-width:600px) {
-        img[data-tenant-branding-background=true] { } /* Keep background */
-        .container { background-color: transparent; } /* Use body background */
-        .container .row .panel-default {
-          border-radius: 0;
-          border: none;
-          box-shadow: none;
-          background-color: transparent; /* Make panel transparent */
-        }
-         #api { border-radius: 0; } /* Remove rounding on mobile if desired */
-      }
-  
-      /* endinject */
-    </style>
-  
-  
-    <style>
-      /* UNIFIED PAGE STYLES - Adapted to new theme */
-      /* inject: css */
-  
-      .unified_container .row .panel-default {
-        padding: 0;
-        margin-top: auto;
-        margin-bottom: auto;
-        height: auto;
+    }
+
+    /* Keep original B2C responsive overrides if needed for specific flows */
+    @media screen and (max-width:100%) {
+      /* ... Review and retain necessary B2C styles ... */
+    }
+
+    .panel,
+    .panel_layout,
+    .panel_layout_row {
+      height: auto;
+    }
+
+    /* Prevent fixed heights */
+    body {
+      min-height: 100vh;
+    }
+
+    /* Ensure body covers viewport */
+
+
+    @media only screen and (max-width:600px) {
+      img[data-tenant-branding-background=true] {}
+
+      /* Keep background */
+      .container {
         background-color: transparent;
+      }
+
+      /* Use body background */
+      .container .row .panel-default {
+        border-radius: 0;
         border: none;
         box-shadow: none;
+        background-color: transparent;
+        /* Make panel transparent */
       }
-  
-      .unified_container .row .panel-default .panel-body {
-        /* Let #api defined above control width/padding/bg */
-        width: auto;
-        margin: 0 auto;
-        padding: 0;
+
+      #api {
+        border-radius: 0;
       }
-  
-      .unified_container .row .panel-default .panel-body .companyName {
-        font-size: 1.3em; /* Slightly smaller */
-        margin-bottom: 30px;
-        color: #FFFFFF; /* White */
-         text-align: center;
-      }
-  
-      .unified_container .row .panel-default .panel-body .companyLogo {
-        display: block;
-        margin-bottom: 20px;
-      }
-  
-      .unified_container .row .panel-default .panel-body img {
-        max-width: 100%;
-        width: auto;
-        max-height: 50px; /* Adjust logo height */
-        height: auto;
-        margin: 0 auto 25px auto; /* Center logo and add space below */
-        display: block;
-      }
-  
-      .unified_container .row .panel-default .panel-body h3 {
-        font-size: 1.4em;
-        color: #FFFFFF; /* White */
-        margin-bottom: 20px;
-         text-align: center;
-      }
-  
-      .unified_container .row .panel-default #api {
-        /* Use #api styles defined in the main section */
-        margin: 0;
-        width: 100%; /* Will be constrained by parent's max-width */
-      }
-  
-      .unified_container .row .panel-default #api .intro {
-        display: block;
-        text-align: center; /* Center intro text */
-        margin-bottom: 20px;
-      }
-  
-      .unified_container .row .panel-default #api .intro h2 {
-        font-size: 1.1em; /* Adjust size */
-        color: #c0bcdc; /* Light text color */
-        font-weight: 400; /* Normal weight */
-      }
-  
-      /* Divider uses main style */
-  
-      .unified_container .row .panel-default #api .localAccount {
-        width: 100%;
-        margin-top: 20px;
-      }
-  
-      .unified_container .row .panel-default #api .localAccount .intro h2 {
-        /* Use intro h2 style above */
-      }
-  
-      .unified_container .row .panel-default #api .localAccount .error {
-        color: #ff6b6b; /* Red error text */
-        text-align: left;
-        margin-bottom: 10px;
-         font-size: 0.9em;
-      }
-  
-      .unified_container .row .panel-default #api .localAccount .entry .buttons {
-        margin: 25px 0 0 0; /* Margin top */
-        text-align: center;
-      }
-  
-      /* Button styling handled by general rules */
-      .unified_container .row .panel-default #api .localAccount .entry .buttons button {
-          width: 100%; /* Full width */
-          margin: 0; /* Reset */
-      }
-  
-      @media screen and (-ms-high-contrast:active) {
-          /* Keep B2C high contrast styles */
-      }
-  
-      /* Hover handled by general rules */
-  
-      .unified_container .row .panel-default #api .localAccount .entry .entry-item {
-        position: relative;
-        width: 100%;
-        margin-bottom: 1.2rem; /* Space between items */
-        display: block;
-        text-align: left;
-      }
-  
-      .unified_container .row .panel-default #api .localAccount .entry .entry-item label {
-         display: block;
-         color: #FFFFFF;
-         margin-bottom: 8px;
-         font-family: inherit;
-         font-weight: 600;
-          font-size: 0.95em;
-      }
-  
-      .unified_container .row .panel-default #api .localAccount .entry .entry-item input:focus {
-         /* Use focus style from main section */
-         outline: 2px solid #001163;
-         outline-offset: 1px;
-         border-color: #001163;
-      }
-  
-      /* Input styling handled by general rules */
-      .unified_container .row .panel-default #api .localAccount .entry .entry-item input {
-          width: 100% !important;
-          margin: 0;
-          font-family: inherit; /* Use body font */
-      }
-  
-  
-      .unified_container .row .panel-default #api .localAccount .entry .entry-item #password {
-        margin-bottom: 5px; /* Reduce space before forgot password */
-      }
-  
-      .unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label {
-        text-align: left;
-        left: 0;
-        width: 100%;
-        margin-top: 5px;
-      }
-  
+
+      /* Remove rounding on mobile if desired */
+    }
+
+    /* endinject */
+  </style>
+
+
+  <style>
+    /* UNIFIED PAGE STYLES - Adapted to new theme */
+    /* inject: css */
+
+    .unified_container .row .panel-default {
+      padding: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+      height: auto;
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .unified_container .row .panel-default .panel-body {
+      /* Let #api defined above control width/padding/bg */
+      width: auto;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .unified_container .row .panel-default .panel-body .companyName {
+      font-size: 1.3em;
+      /* Slightly smaller */
+      margin-bottom: 30px;
+      color: #FFFFFF;
+      /* White */
+      text-align: center;
+    }
+
+    .unified_container .row .panel-default .panel-body .companyLogo {
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .unified_container .row .panel-default .panel-body img {
+      max-width: 100%;
+      width: auto;
+      max-height: 50px;
+      /* Adjust logo height */
+      height: auto;
+      margin: 0 auto 25px auto;
+      /* Center logo and add space below */
+      display: block;
+    }
+
+    .unified_container .row .panel-default .panel-body h3 {
+      font-size: 1.4em;
+      color: #FFFFFF;
+      /* White */
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .unified_container .row .panel-default #api {
+      /* Use #api styles defined in the main section */
+      margin: 0;
+      width: 100%;
+      /* Will be constrained by parent's max-width */
+    }
+
+    .unified_container .row .panel-default #api .intro {
+      display: block;
+      text-align: center;
+      /* Center intro text */
+      margin-bottom: 20px;
+    }
+
+    .unified_container .row .panel-default #api .intro h2 {
+      font-size: 1.1em;
+      /* Adjust size */
+      color: #c0bcdc;
+      /* Light text color */
+      font-weight: 400;
+      /* Normal weight */
+    }
+
+    /* Divider uses main style */
+
+    .unified_container .row .panel-default #api .localAccount {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .unified_container .row .panel-default #api .localAccount .intro h2 {
+      /* Use intro h2 style above */
+    }
+
+    .unified_container .row .panel-default #api .localAccount .error {
+      color: #ff6b6b;
+      /* Red error text */
+      text-align: left;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .buttons {
+      margin: 25px 0 0 0;
+      /* Margin top */
+      text-align: center;
+    }
+
+    /* Button styling handled by general rules */
+    .unified_container .row .panel-default #api .localAccount .entry .buttons button {
+      width: 100%;
+      /* Full width */
+      margin: 0;
+      /* Reset */
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+      /* Keep B2C high contrast styles */
+    }
+
+    /* Hover handled by general rules */
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item {
+      position: relative;
+      width: 100%;
+      margin-bottom: 1.2rem;
+      /* Space between items */
+      display: block;
+      text-align: left;
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item label {
+      display: block;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item input:focus {
+      /* Use focus style from main section */
+      outline: 2px solid #001163;
+      outline-offset: 1px;
+      border-color: #001163;
+    }
+
+    /* Input styling handled by general rules */
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item input {
+      width: 100% !important;
+      margin: 0;
+      font-family: inherit;
+      /* Use body font */
+    }
+
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item #password {
+      margin-bottom: 5px;
+      /* Reduce space before forgot password */
+    }
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label {
+      text-align: left;
+      left: 0;
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .forgot-password {
+      text-align: right;
+      font-size: 0.85em;
+      display: block;
+      margin-top: 5px;
+      /* Space above link */
+    }
+
+    .forgot-password a {
+      color: #001163;
+      /* Link color */
+    }
+
+    .forgot-password a:hover {
+      color: #c0bcdc;
+    }
+
+
+    .forgot-password.center-height {}
+
+    /* Remove complex positioning */
+
+    /* Keyframes kept for B2C compatibility */
+    @keyframes slideInFromRight {}
+
+    .unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label #forgotPassword {}
+
+    /* Remove complex positioning */
+
+
+    .unified_container .row .panel-default #api .localAccount .rememberMe {
+      margin-top: 15px;
+      text-align: left;
+      position: relative;
+      width: 100%;
+      font-size: 0.9em;
+      color: #c0bcdc;
+    }
+
+    .unified_container .row .panel-default #api .localAccount .rememberMe input[type=checkbox] {
+      margin-right: 8px;
+      vertical-align: middle;
+      accent-color: #001163;
+      /* Style checkbox color */
+    }
+
+
+    .unified_container .row .panel-default #api .localAccount .rememberMe.align-to-left {
+      text-align: left;
+      margin-left: 0;
+      width: 100%
+    }
+
+    .working {
+      display: none;
+    }
+
+    /* Keep hidden */
+
+    /* "Don't have an account?" / Create link styling */
+    .unified_container .row .panel-default #api .claims-provider-list-text-links p,
+    .unified_container .row .panel-default #api .localAccount .create p {
+      text-align: center;
+      margin-top: 25px;
+      margin-bottom: 0;
+      /* Reduce bottom margin */
+      font-size: 0.9em;
+      color: #c0bcdc;
+    }
+
+    .unified_container .row .panel-default #api .claims-provider-list-text-links p a,
+    .unified_container .row .panel-default #api .localAccount .create p a,
+    .unified_container .row .panel-default #api .localAccount .create #createAccount {
+      /* Style createAccount as a link */
+      color: #001163;
+      /* Link color */
+      text-decoration: none;
+      font-weight: 600;
+      /* Bold link */
+      cursor: pointer;
+      /* Reset potential button styles */
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0 5px;
+      display: inline;
+      height: auto;
+      line-height: inherit;
+    }
+
+    .unified_container .row .panel-default #api .claims-provider-list-text-links p a:hover,
+    .unified_container .row .panel-default #api .localAccount .create p a:hover,
+    .unified_container .row .panel-default #api .localAccount .create #createAccount:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+
+    .unified_container .row .panel-default #api .social {
+      position: relative;
+      width: 100%;
+      margin-top: 20px;
+      /* Space above social buttons */
+    }
+
+    /* Social Button styling handled by general rules (.accountButton) */
+
+
+    .claims-provider-list-text-links-bottom-under-form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .claims-provider-list-text-links-bottom-under-form a {
+      color: #001163;
+      font-size: 0.85em;
+      margin: 0 8px;
+    }
+
+    .claims-provider-list-text-links-bottom-under-form a:hover {
+      color: #c0bcdc;
+    }
+
+    /* Keep B2C responsive overrides if needed */
+    @media (max-width:100%) {}
+
+    @media screen and (max-width:320px) {
+
+      /* Further adjustments for very small screens if needed */
       .forgot-password {
-        text-align: right;
-        font-size: 0.85em;
-        display: block;
-        margin-top: 5px; /* Space above link */
-      }
-       .forgot-password a {
-          color: #001163; /* Link color */
-       }
-       .forgot-password a:hover {
-           color: #c0bcdc;
-       }
-  
-  
-      .forgot-password.center-height { } /* Remove complex positioning */
-  
-      /* Keyframes kept for B2C compatibility */
-      @keyframes slideInFromRight { }
-  
-      .unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label #forgotPassword { } /* Remove complex positioning */
-  
-  
-      .unified_container .row .panel-default #api .localAccount .rememberMe {
-        margin-top: 15px;
         text-align: left;
-        position: relative;
-        width: 100%;
-        font-size: 0.9em;
-        color: #c0bcdc;
       }
-       .unified_container .row .panel-default #api .localAccount .rememberMe input[type=checkbox] {
-          margin-right: 8px;
-          vertical-align: middle;
-          accent-color: #001163; /* Style checkbox color */
-       }
-  
-  
-      .unified_container .row .panel-default #api .localAccount .rememberMe.align-to-left {
-        text-align: left;
-        margin-left: 0;
-        width: 100%
-      }
-  
-      .working { display: none; } /* Keep hidden */
-  
-      /* "Don't have an account?" / Create link styling */
-      .unified_container .row .panel-default #api .claims-provider-list-text-links p,
-      .unified_container .row .panel-default #api .localAccount .create p {
-        text-align: center;
-        margin-top: 25px;
-        margin-bottom: 0; /* Reduce bottom margin */
-        font-size: 0.9em;
-        color: #c0bcdc;
-      }
-       .unified_container .row .panel-default #api .claims-provider-list-text-links p a,
-       .unified_container .row .panel-default #api .localAccount .create p a,
-       .unified_container .row .panel-default #api .localAccount .create #createAccount { /* Style createAccount as a link */
-          color: #001163; /* Link color */
-          text-decoration: none;
-          font-weight: 600; /* Bold link */
-          cursor: pointer;
-          /* Reset potential button styles */
-          background: none; border: none; padding: 0; margin: 0 5px; display: inline; height: auto; line-height: inherit;
-       }
-        .unified_container .row .panel-default #api .claims-provider-list-text-links p a:hover,
-        .unified_container .row .panel-default #api .localAccount .create p a:hover,
-        .unified_container .row .panel-default #api .localAccount .create #createAccount:hover {
-           color: #FFFFFF;
-           text-decoration: underline;
-        }
-  
-  
-      .unified_container .row .panel-default #api .social {
-        position: relative;
-        width: 100%;
-        margin-top: 20px; /* Space above social buttons */
-      }
-  
-      /* Social Button styling handled by general rules (.accountButton) */
-  
-  
-      .claims-provider-list-text-links-bottom-under-form {
-        text-align: center;
-        margin-top: 20px;
-      }
-       .claims-provider-list-text-links-bottom-under-form a {
-          color: #001163;
-          font-size: 0.85em;
-          margin: 0 8px;
-       }
-       .claims-provider-list-text-links-bottom-under-form a:hover {
-          color: #c0bcdc;
-       }
-  
-      /* Keep B2C responsive overrides if needed */
-      @media (max-width:100%) { }
-  
-      @media screen and (max-width:320px) {
-         /* Further adjustments for very small screens if needed */
-          .forgot-password { text-align: left; }
-      }
-  
-      /* endinject */
-    </style>
+    }
+
+    /* endinject */
+  </style>
 
 </head>
+
 <body>
-    <div id="background_branding_container" data-tenant-branding-background-color="true">
-      <img data-tenant-branding-background="true" src="./bg.jpg" alt="Illustration"/>
-    </div>
-    <div class="container  self_asserted_container " role="presentation">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img class="companyLogo" data-tenant-branding-logo="true" src="https://login.microsoftonline.com/templates/src/images/logo.svg" alt="Company Logo">
-                        <div id="api" role="main">
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div id="background_branding_container" data-tenant-branding-background-color="true">
+    <img data-tenant-branding-background="true" src="./bg.jpg" alt="Illustration" />
+  </div>
+  <div class="container  self_asserted_container " role="presentation">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="panel-body">
+
+          <div id="api" role="main">
+            <img class="companyLogo" data-tenant-branding-logo="true"
+              src="https://login.microsoftonline.com/templates/src/images/logo.svg" height="100px" width="100px"
+              alt="Company Logo">
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </body>
+
 </html>
