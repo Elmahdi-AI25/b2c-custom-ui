@@ -175,11 +175,11 @@
     body {
         font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
         background-attachment: fixed;
-        background-color: var(--background-color) !important;
+        background-color: var(--background-color);
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        background-image: url(./bg.jpg);
+        background-image: url(./bg.jpg)  !important;
         text-align: left;
         font: -apple-system-body;
         color: var(--text-color);
@@ -207,6 +207,7 @@
         background-color: var(--input-bg-color);
         color: var(--text-color-light);
         border-radius: .5rem;
+        margin-bottom: 5px;
     }
 
     input::placeholder,
@@ -553,7 +554,6 @@
         height: 50px;
         border-radius: .5rem;
         width: 100%;
-        padding-left: 15px;
     }
 
     #attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date {
@@ -604,7 +604,8 @@
     .panel_layout,
     .panel_layout_row {
         height: 100%;
-        background-color: transparent;
+        background-color: var(--form-bg-color) !important;
+        box-shadow: 0 4px 20px 0 var(--button-hover-bg-color) !important;
     }
 
     @media only screen and (max-width: 600px) {
