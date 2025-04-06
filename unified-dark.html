@@ -117,119 +117,6 @@
             content: url(https://login.microsoftonline.com/templates/src/images/left-arrow.svg);
         }
 
-        <style id="common">@font-face {
-            font-family: 'SegoeUI';
-            src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui.WOFF);
-            font-weight: normal;
-        }
-
-        @font-face {
-            font-family: 'SegoeUI';
-            src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui_bold.WOFF);
-            font-weight: bold;
-        }
-
-        #AmazonExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/amazon.svg);
-        }
-
-        #AmazonExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/amazon.svg);
-            background-color: #36474f !important;
-        }
-
-        #FacebookExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/facebook.svg);
-        }
-
-        #FacebookExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/facebook.svg);
-            background-color: #3b5595 !important;
-        }
-
-        #GitHubExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/github.svg);
-        }
-
-        #GitHubExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/github.svg);
-            background-color: #0f0f0f !important;
-        }
-
-        #AppleExchange,
-        #AppleManagedExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/apple.svg);
-        }
-
-        #AppleExchange:hover,
-        #AppleManagedExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/apple.svg);
-            background-color: #0f0f0f !important;
-        }
-
-        #GoogleExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/google.svg);
-        }
-
-        #GoogleExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/google.svg);
-            background-color: #c64a29 !important;
-        }
-
-        #LinkedInExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/linkedin.svg);
-        }
-
-        #LinkedInExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/linkedin.svg);
-            background-color: #0274b3 !important;
-        }
-
-        #MicrosoftAccountExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/microsoft.svg);
-        }
-
-        #MicrosoftAccountExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/microsoft.svg);
-            background-color: #01a4ef !important;
-        }
-
-        #QQExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/qq.svg);
-        }
-
-        #QQExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/qq.svg);
-            background-color: #1a97df !important;
-        }
-
-        #TwitterExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/twitter.svg);
-        }
-
-        #TwitterExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/twitter.svg);
-            background-color: #1da1f2 !important;
-        }
-
-        #WeChatExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/wechat.svg);
-        }
-
-        #WeChatExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/wechat.svg);
-            background-color: #4cc522 !important;
-        }
-
-        #WeiboExchange {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/weibo.svg);
-        }
-
-        #WeiboExchange:hover {
-            background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/weibo.svg);
-            background-color: #e81123 !important;
-        }
-
         .buttons #cancel:before {
             content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23cccccc' class='bi bi-arrow-left' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z'/%3E%3C/svg%3E");
         }
@@ -293,6 +180,7 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            background-image: url(./bg.jpg);
             text-align: left;
             font: -apple-system-body;
             color: var(--text-color);
@@ -530,7 +418,8 @@
         #attributeList ul li input,
         #attributeList ul li select {
             height: 50px;
-            width: 100% border-radius: .5rem;
+            width: 100%;
+             border-radius: .5rem;
             text-indent: 20px;
             background-color: var(--input-bg-color);
             color: var(--text-color-light);
@@ -658,6 +547,7 @@
         input[type=password],
         input[type=text] {
             -webkit-appearance: none;
+            appearance: none;
         }
 
         #attributeList ul li .attrEntry .dropdown_single {
@@ -723,7 +613,6 @@
                 display: none;
             }
 
-            .container {}
 
             .container .row .panel-default {
                 border-radius: 0;
@@ -1094,7 +983,6 @@
         }
 
         @media (max-width: 100%) {
-            .unified_container .row .panel-default {}
 
             .unified_container .row .panel-default .panel-body {
                 padding: 2rem 1.5rem;
@@ -1130,7 +1018,6 @@
                 height: 45px;
             }
 
-            .unified_container .row .panel-default .panel-body #api .localAccount {}
 
             .unified_container .row .panel-default .panel-body #api .localAccount .entry .entry-item {
                 display: block;
@@ -1143,7 +1030,6 @@
                 height: 45px;
             }
 
-            .unified_container .row .panel-default .panel-body #api .localAccount .entry .entry-item .password-label {}
 
             .unified_container .row .panel-default .panel-body #api .localAccount .entry .entry-item:nth-child(2) {
                 width: 100%;
